@@ -117,8 +117,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvasWrap') canvasWrap!: ElementRef<HTMLDivElement>;
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('darkOverlay') darkOverlay!: ElementRef<HTMLDivElement>;
-  @ViewChild('marqueeWrap') marqueeWrap!: ElementRef<HTMLDivElement>;
-  @ViewChild('marqueeText') marqueeText!: ElementRef<HTMLDivElement>;
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLElement>;
 
   private cleanupFns: Array<() => void> = [];
@@ -180,7 +178,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.initHeroTransition(gsap, ScrollTrigger);
     this.initSections(gsap, ScrollTrigger);
     this.initCounters(gsap, ScrollTrigger);
-    this.initMarquee(gsap, ScrollTrigger);
     this.initDarkOverlay(ScrollTrigger);
     ScrollTrigger.refresh();
 
@@ -346,11 +343,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private hideLoader(gsap: any): void {
     const el = this.loader?.nativeElement;
     if (!el) return;
+    // Hold the loader visible long enough to showcase one full
+    // 3D rotation of the monogram (animation cycle = 2.8s).
     gsap.to(el, {
       opacity: 0,
-      duration: 0.8,
+      duration: 0.75,
       ease: 'power3.out',
-      delay: 0.15,
+      delay: 1.5,
       onComplete: () => {
         el.style.display = 'none';
       }
@@ -682,53 +681,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         st.kill();
         tween.kill();
       });
-    });
-  }
-
-  // ==================== Marquee ====================
-
-  private initMarquee(gsap: any, ScrollTrigger: any): void {
-    const wrap = this.marqueeWrap.nativeElement;
-    const text = this.marqueeText.nativeElement;
-    const speed = parseFloat(wrap.dataset['scrollSpeed'] || '-25');
-
-    const tween = gsap.to(text, {
-      xPercent: speed,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: this.scrollContainer.nativeElement,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true
-      }
-    });
-
-    wrap.style.opacity = '0';
-    const fadeRange = 0.04;
-    const showFrom = 0.18;
-    const showTo = 0.95;
-    const st = ScrollTrigger.create({
-      trigger: this.scrollContainer.nativeElement,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      onUpdate: (self: any) => {
-        const p = self.progress;
-        let opacity = 0;
-        if (p >= showFrom - fadeRange && p < showFrom) {
-          opacity = (p - (showFrom - fadeRange)) / fadeRange;
-        } else if (p >= showFrom && p < showTo) {
-          opacity = 1;
-        } else if (p >= showTo && p < showTo + fadeRange) {
-          opacity = 1 - (p - showTo) / fadeRange;
-        }
-        wrap.style.opacity = String(opacity);
-      }
-    });
-    this.cleanupFns.push(() => {
-      st.kill();
-      tween.scrollTrigger?.kill();
-      tween.kill();
     });
   }
 

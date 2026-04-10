@@ -105,17 +105,56 @@ img { max-width: 100%; display: block; }
   display: grid;
   gap: 2.2rem;
 }
-.loader-logo {
-  width: clamp(200px, 24vw, 320px);
-  height: auto;
-  display: block;
-  filter: invert(1);
-  mix-blend-mode: multiply;
-  animation: loaderFloat 3.2s var(--ease-out) infinite;
+/* === 3D Monogram === */
+.loader-3d {
+  width: clamp(150px, 17vw, 220px);
+  height: clamp(150px, 17vw, 220px);
+  margin: 0 auto;
+  perspective: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
-@keyframes loaderFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+.loader-3d::after {
+  /* Soft floor reflection — a static glow under the spinning logo */
+  content: '';
+  position: absolute;
+  bottom: -14%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 14px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(91, 124, 153, 0.35) 0%,
+    rgba(91, 124, 153, 0.18) 30%,
+    transparent 75%
+  );
+  filter: blur(6px);
+  animation: shadowBreathe 2.8s ease-in-out infinite;
+}
+.loader-mark-3d {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: invert(1) drop-shadow(0 12px 18px rgba(91, 124, 153, 0.28));
+  mix-blend-mode: multiply;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  animation: monogramSpin 2.8s cubic-bezier(0.65, 0.05, 0.35, 1) infinite;
+  will-change: transform;
+}
+@keyframes monogramSpin {
+  0%   { transform: rotateY(0deg)   rotateX(0deg)  scale(1); }
+  25%  { transform: rotateY(90deg)  rotateX(8deg)  scale(0.96); }
+  50%  { transform: rotateY(180deg) rotateX(0deg)  scale(1); }
+  75%  { transform: rotateY(270deg) rotateX(-8deg) scale(0.96); }
+  100% { transform: rotateY(360deg) rotateX(0deg)  scale(1); }
+}
+@keyframes shadowBreathe {
+  0%, 100% { width: 60%; opacity: 0.55; }
+  50%      { width: 48%; opacity: 0.85; }
 }
 .loader-track {
   height: 1px;
@@ -594,28 +633,6 @@ img { max-width: 100%; display: block; }
   will-change: opacity;
 }
 
-/* ===================== MARQUEE ===================== */
-.marquee-wrap {
-  position: fixed;
-  top: 42vh;
-  left: 0; right: 0;
-  z-index: 4;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0;
-  mix-blend-mode: difference;
-  color: var(--bg-pure);
-}
-.marquee-text {
-  white-space: nowrap;
-  font-size: 15vw;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 0.9;
-  letter-spacing: -0.035em;
-  will-change: transform;
-}
-
 /* ===================== SCROLL CONTAINER ===================== */
 #scroll-container {
   position: relative;
@@ -857,7 +874,7 @@ img { max-width: 100%; display: block; }
   .nav-brand, .nav-brand-img { width: 30px; height: 30px; }
   .nav-cta { padding: 0.58rem 0.95rem 0.58rem 1.05rem; font-size: 0.6rem; letter-spacing: 0.2em; }
 
-  .loader-logo { width: 60vw; }
+  .loader-3d { width: 50vw; height: 50vw; }
   .footer-logo { width: 150px; }
 
   /* Hero re-layouted for vertical carousel */
@@ -941,7 +958,6 @@ img { max-width: 100%; display: block; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 0; }
   .stat { border-right: none; border-bottom: 1px solid var(--hairline-dark); padding: 1.4rem 0.5rem; }
   .stat:nth-last-child(1), .stat:nth-last-child(2) { border-bottom: none; }
-  .marquee-text { font-size: 22vw; }
   #scroll-container { height: 700vh; }
   .footer-grid { grid-template-columns: 1fr; gap: 1.2rem; }
   .footer-copy { align-items: flex-start; }
