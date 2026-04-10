@@ -172,17 +172,22 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.cleanupFns.push(() => lenis.destroy());
 
     this.setupCanvas();
+
+    // Reveal hero IMMEDIATELY — don't wait for 121 video frames.
+    this.hideLoader(gsap);
+    this.initNavReveal(gsap);
+    this.initHeroIntro(gsap);
+    this.initHeroTransition(gsap, ScrollTrigger);
+    this.initSections(gsap, ScrollTrigger);
+    this.initCounters(gsap, ScrollTrigger);
+    this.initMarquee(gsap, ScrollTrigger);
+    this.initDarkOverlay(ScrollTrigger);
+    ScrollTrigger.refresh();
+
+    // Preload scroll-scrub frames in the background; wire scrub once ready.
     this.preloadFrames()
       .then(() => {
-        this.hideLoader(gsap);
-        this.initHeroTransition(gsap, ScrollTrigger);
         this.initFrameScrub(ScrollTrigger);
-        this.initSections(gsap, ScrollTrigger);
-        this.initCounters(gsap, ScrollTrigger);
-        this.initMarquee(gsap, ScrollTrigger);
-        this.initDarkOverlay(ScrollTrigger);
-        this.initNavReveal(gsap);
-        this.initHeroIntro(gsap);
         ScrollTrigger.refresh();
       })
       .catch((err) => console.error('[experience] preload failed', err));
@@ -232,29 +237,42 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const phase1 = async () => {
       const first = Math.min(10, FRAME_COUNT);
       for (let i = 0; i < first; i++) {
-        this.frames[i] = await this.loadImage(this.framePath(i));
+        try {
+          this.frames[i] = await this.loadImage(this.framePath(i));
+        } catch {
+          /* skip missing frame, keep going */
+        }
         update(i + 1);
       }
-      this.sampleBgColor(this.frames[0]);
-      this.currentFrame = 0;
-      this.drawFrame(0);
+      if (this.frames[0]) {
+        this.sampleBgColor(this.frames[0]);
+        this.currentFrame = 0;
+        this.drawFrame(0);
+      }
     };
 
-    // Phase 2: load the rest in parallel.
+    // Phase 2: load the rest in parallel — use allSettled so one failure
+    // doesn't reject the whole batch.
     const phase2 = async () => {
       let done = Math.min(10, FRAME_COUNT);
-      const tasks: Promise<void>[] = [];
+      const tasks: Promise<unknown>[] = [];
       for (let i = 10; i < FRAME_COUNT; i++) {
         const idx = i;
         tasks.push(
-          this.loadImage(this.framePath(idx)).then((img) => {
-            this.frames[idx] = img;
-            done++;
-            update(done);
-          })
+          this.loadImage(this.framePath(idx))
+            .then((img) => {
+              this.frames[idx] = img;
+            })
+            .catch(() => {
+              /* skip missing frame */
+            })
+            .finally(() => {
+              done++;
+              update(done);
+            })
         );
       }
-      await Promise.all(tasks);
+      await Promise.allSettled(tasks);
     };
 
     return phase1().then(phase2);
@@ -331,19 +349,19 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   // ==================== Nav / Hero intro ====================
 
   private initNavReveal(gsap: any): void {
-    const header = document.querySelector('.site-header');
-    if (!header) return;
-    gsap.from(header, {
-      y: -40,
+    const pill = document.querySelector('.nav-pill');
+    if (!pill) return;
+    gsap.from(pill, {
+      y: -32,
       opacity: 0,
+      scale: 0.92,
       duration: 1.1,
       ease: 'power3.out',
-      delay: 0.9
+      delay: 0.95
     });
   }
 
   private initHeroIntro(gsap: any): void {
-    const chapter = document.querySelector('.hero-chapter');
     const centerFrame = document.querySelector('.carousel-slide.pos-0 .slide-frame');
     const allSlides = document.querySelectorAll('.carousel-slide');
     const navButtons = document.querySelectorAll('.carousel-nav');
@@ -356,16 +374,20 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     ].filter(Boolean) as Element[];
 
     // Do NOT touch transforms on .carousel-slide — CSS owns them via pos-* classes.
-    const tl = gsap.timeline({ delay: 0.5 });
-
-    if (chapter)
-      tl.from(chapter, { y: -16, opacity: 0, duration: 0.9, ease: 'power3.out' }, 0);
+    // Use clearProps so inline styles are removed after the tween (otherwise the
+    // fixed opacity prevents the CSS class rules from taking effect on navigation).
+    const tl = gsap.timeline({ delay: 0.3 });
 
     if (allSlides.length)
       tl.from(
         allSlides,
-        { opacity: 0, duration: 1.0, ease: 'power3.out' },
-        0.15
+        {
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          clearProps: 'opacity'
+        },
+        0
       );
 
     if (centerFrame)
@@ -375,37 +397,65 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           clipPath: 'inset(100% 0 0 0)',
           webkitClipPath: 'inset(100% 0 0 0)',
           duration: 1.4,
-          ease: 'power4.out'
+          ease: 'power4.out',
+          clearProps: 'clipPath,webkitClipPath'
         },
-        0.3
+        0.25
       );
 
     if (navButtons.length)
       tl.from(
         navButtons,
-        { opacity: 0, scale: 0.85, duration: 0.8, ease: 'power3.out' },
-        0.9
+        {
+          opacity: 0,
+          scale: 0.85,
+          duration: 0.8,
+          ease: 'power3.out',
+          clearProps: 'opacity,transform'
+        },
+        0.75
       );
 
     if (caption.length)
       tl.from(
         caption,
-        { y: 14, opacity: 0, stagger: 0.06, duration: 0.7, ease: 'power3.out' },
-        0.95
+        {
+          y: 14,
+          opacity: 0,
+          stagger: 0.06,
+          duration: 0.7,
+          ease: 'power3.out',
+          clearProps: 'all'
+        },
+        0.85
       );
 
     if (dots.length)
       tl.from(
         dots,
-        { y: 8, opacity: 0, stagger: 0.04, duration: 0.6, ease: 'power3.out' },
-        1.05
+        {
+          y: 8,
+          opacity: 0,
+          stagger: 0.04,
+          duration: 0.6,
+          ease: 'power3.out',
+          clearProps: 'all'
+        },
+        0.95
       );
 
     if (rails.length)
       tl.from(
         rails,
-        { y: 18, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out' },
-        1.15
+        {
+          y: 18,
+          opacity: 0,
+          stagger: 0.08,
+          duration: 0.8,
+          ease: 'power3.out',
+          clearProps: 'all'
+        },
+        1.0
       );
   }
 

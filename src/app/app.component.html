@@ -6,21 +6,42 @@
       <div id="loader-bar" #loaderBar></div>
     </div>
     <div class="loader-meta">
-      <span class="loader-label">Loading the atelier</span>
+      <span class="loader-label">Chargement de l&apos;atelier</span>
       <span id="loader-percent" #loaderPercent>0%</span>
     </div>
   </div>
 </div>
 
-<!-- ============ HEADER ============ -->
+<!-- ============ HEADER — Floating pill navbar ============ -->
 <header class="site-header">
-  <nav class="nav">
-    <a class="logo" href="#" aria-label="All of Cutz">
-      <img class="brand-mark" src="logo-mark.png" alt="All of Cutz" />
+  <nav class="nav-pill" aria-label="Navigation principale">
+    <a class="nav-brand" href="#" aria-label="All of Cutz">
+      <img class="nav-brand-img" src="logo-mark.png" alt="All of Cutz" />
     </a>
+
+    <span class="nav-sep" aria-hidden="true"></span>
+
+    <ul class="nav-menu">
+      <li><a href="#maison">Maison</a></li>
+      <li><a href="#rituels">Rituels</a></li>
+      <li><a href="#tarifs">Tarifs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <span class="nav-sep" aria-hidden="true"></span>
+
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span class="status-label">Ouvert</span>
+    </div>
+
     <a class="nav-cta" href="#book">
-      <span>Reserve</span>
-      <span class="nav-cta-arrow">&#x2192;</span>
+      <span class="nav-cta-label">Réserver</span>
+      <span class="nav-cta-arrow">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </span>
     </a>
   </nav>
 </header>
@@ -28,14 +49,6 @@
 <!-- ============ HERO (standalone) ============ -->
 <section class="hero-standalone" #hero>
   <div class="hero-marble"></div>
-
-  <div class="hero-head">
-    <span class="hero-chapter">
-      <span class="chapter-dash"></span>
-      <span>Chapitre I &mdash; L&apos;Atelier</span>
-      <span class="chapter-dash"></span>
-    </span>
-  </div>
 
   <div class="hero-carousel">
     <button type="button" class="carousel-nav carousel-prev" (click)="prevSlide()" aria-label="Image précédente">
@@ -86,12 +99,11 @@
 
   <!-- Bottom rail -->
   <div class="hero-rail-bottom">
-    <span class="rail-l">48.8566&deg; N &nbsp;&middot;&nbsp; 2.3522&deg; E</span>
+    <span class="rail-l">48.8402&deg; N &nbsp;&middot;&nbsp; 2.3869&deg; E</span>
     <span class="rail-c">
-      <span class="rail-label">Scroll to enter</span>
       <span class="scroll-line"></span>
     </span>
-    <span class="rail-r">Appointment only</span>
+    <span class="rail-r">Sur rendez-vous</span>
   </div>
 </section>
 
@@ -106,109 +118,109 @@
 <!-- ============ MARQUEE ============ -->
 <div class="marquee-wrap" #marqueeWrap data-scroll-speed="-28">
   <div class="marquee-text" #marqueeText>
-    Precision &middot; Craft &middot; Ritual &middot; Precision &middot; Craft &middot; Ritual &middot;
+    Précision &middot; Savoir-faire &middot; Rituel &middot; Précision &middot; Savoir-faire &middot; Rituel &middot;
   </div>
 </div>
 
 <!-- ============ SCROLL CONTAINER ============ -->
 <main id="scroll-container" #scrollContainer>
 
-  <!-- 001 — The Atelier -->
+  <!-- 001 — L'Atelier -->
   <section
-    id="atelier"
+    id="maison"
     class="scroll-section section-content align-left"
     data-enter="22" data-leave="38" data-animation="slide-left">
     <div class="section-inner">
-      <span class="section-label">001 &nbsp;/&nbsp; The Atelier</span>
-      <h2 class="section-heading">A hush between the <em>scissors</em>.</h2>
+      <span class="section-label">001 &nbsp;/&nbsp; L&apos;Atelier</span>
+      <h2 class="section-heading">Un silence entre les <em>ciseaux</em>.</h2>
       <p class="section-body">
-        Behind a quiet door on rue de Verneuil, five chairs hold the room.
-        No music. No rush. Only the careful percussion of blades and the hush
-        of a craft practiced for a lifetime.
+        Derrière une porte discrète du 12<sup>e</sup>, cinq fauteuils tiennent la salle.
+        Pas de musique. Pas de hâte. Seulement la percussion précise des lames
+        et le silence d&apos;un savoir-faire pratiqué depuis toujours.
       </p>
-      <span class="section-note">&#x2014;&nbsp;Since 1998</span>
+      <span class="section-note">&#x2014;&nbsp;Depuis 1998</span>
     </div>
   </section>
 
-  <!-- 002 — Signature Service -->
+  <!-- 002 — La Coupe Signature -->
   <section
-    id="craft"
+    id="rituels"
     class="scroll-section section-content align-right"
     data-enter="40" data-leave="56" data-animation="slide-right">
     <div class="section-inner">
-      <span class="section-label">002 &nbsp;/&nbsp; Signature Cut</span>
-      <h2 class="section-heading">The <em>Maison</em> cut.</h2>
+      <span class="section-label">002 &nbsp;/&nbsp; La Coupe Signature</span>
+      <h2 class="section-heading">La Coupe <em>Maison</em>.</h2>
       <p class="section-body">
-        A two-hour ritual. Hot towel, bespoke consultation, hand-mixed tonic,
-        dry-cut shaping, and a finishing scalp massage with neroli oil.
-        The house signature for fifteen seasons running.
+        Un rituel de deux heures. Serviette chaude, consultation sur mesure,
+        tonique préparé à la main, coupe à sec et massage final du cuir chevelu
+        à l&apos;huile de néroli. La signature de la maison depuis quinze saisons.
       </p>
-      <span class="section-note">&#x2014;&nbsp;180&euro; &middot; 120 minutes</span>
+      <span class="section-note">&#x2014;&nbsp;180&nbsp;&euro; &middot; 120 minutes</span>
     </div>
   </section>
 
-  <!-- 003 — Stats (dark overlay) -->
+  <!-- 003 — En Chiffres (dark overlay) -->
   <section
     class="scroll-section section-stats"
     data-enter="60" data-leave="74" data-animation="stagger-up">
     <div class="stats-inner">
-      <span class="section-label stats-label">003 &nbsp;/&nbsp; In Numbers</span>
+      <span class="section-label stats-label">003 &nbsp;/&nbsp; En Chiffres</span>
       <div class="stats-grid">
         <div class="stat">
           <span class="stat-number" data-value="27" data-decimals="0">0</span>
-          <span class="stat-suffix">yrs</span>
-          <span class="stat-label">Of quiet practice</span>
+          <span class="stat-suffix">ans</span>
+          <span class="stat-label">De pratique silencieuse</span>
         </div>
         <div class="stat">
           <span class="stat-number" data-value="5" data-decimals="0">0</span>
-          <span class="stat-suffix">chairs</span>
-          <span class="stat-label">Only &mdash; by design</span>
+          <span class="stat-suffix">fauteuils</span>
+          <span class="stat-label">Seulement &mdash; par choix</span>
         </div>
         <div class="stat">
           <span class="stat-number" data-value="14200" data-decimals="0">0</span>
-          <span class="stat-suffix">cuts</span>
-          <span class="stat-label">Hands that remember</span>
+          <span class="stat-suffix">coupes</span>
+          <span class="stat-label">Des mains qui se souviennent</span>
         </div>
         <div class="stat">
           <span class="stat-number" data-value="4.98" data-decimals="2">0</span>
           <span class="stat-suffix">&#9733;</span>
-          <span class="stat-label">Across 2,300 voices</span>
+          <span class="stat-label">À travers 2&nbsp;300 voix</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 004 — Stylists -->
+  <!-- 004 — Les Mains -->
   <section
-    id="stylists"
+    id="tarifs"
     class="scroll-section section-content align-left"
     data-enter="78" data-leave="90" data-animation="clip-reveal">
     <div class="section-inner">
-      <span class="section-label">004 &nbsp;/&nbsp; The Hands</span>
-      <h2 class="section-heading">Five stylists. <em>One</em> ear.</h2>
+      <span class="section-label">004 &nbsp;/&nbsp; Les Mains</span>
+      <h2 class="section-heading">Cinq coiffeurs. <em>Une</em> seule oreille.</h2>
       <p class="section-body">
-        Clement, Ines, Sora, Matthieu, and Ada. Between them,
-        a century of shears. They do not follow trends;
-        they listen until a cut arrives on its own.
+        Clément, Inès, Sora, Matthieu et Ada. À eux cinq,
+        un siècle de ciseaux. Ils ne suivent pas les tendances&nbsp;;
+        ils écoutent jusqu&apos;à ce qu&apos;une coupe trouve son chemin.
       </p>
-      <span class="section-note">&#x2014;&nbsp;Meet the atelier</span>
+      <span class="section-note">&#x2014;&nbsp;Rencontrer l&apos;atelier</span>
     </div>
   </section>
 
-  <!-- 005 — CTA (persist) -->
+  <!-- 005 — Réserver (persist) -->
   <section
     id="book"
     class="scroll-section section-cta align-right"
     data-enter="92" data-leave="100" data-animation="scale-up" data-persist="true">
     <div class="section-inner">
-      <span class="section-label">005 &nbsp;/&nbsp; Reserve</span>
-      <h2 class="section-heading">Take the <em>chair</em>.</h2>
+      <span class="section-label">005 &nbsp;/&nbsp; Réserver</span>
+      <h2 class="section-heading">Prenez <em>place</em>.</h2>
       <p class="section-body">
-        Seats open monthly on the first Monday, at dawn.
-        A small ceremony. We recommend punctuality.
+        Les rendez-vous s&apos;ouvrent chaque premier lundi du mois, à l&apos;aube.
+        Une petite cérémonie. La ponctualité est appréciée.
       </p>
-      <a class="cta-button" href="mailto:reserve&#64;allofcutz.paris">
-        <span>Request a seat</span>
+      <a class="cta-button" href="mailto:contact&#64;allofcutz.paris">
+        <span>Demander un rendez-vous</span>
         <span class="cta-arrow">&#x2197;</span>
       </a>
     </div>
@@ -223,13 +235,13 @@
       <img class="footer-logo" src="logo-full.png" alt="All of Cutz — Hair Studio" />
     </div>
     <div class="footer-meta">
-      <span>11 rue de Verneuil</span>
-      <span>75007 Paris</span>
-      <span>Tue &mdash; Sat &middot; 10 to 19</span>
+      <span>35 boulevard de Reuilly</span>
+      <span>75012 Paris</span>
+      <span>Mar &mdash; Sam &middot; 10h à 19h</span>
     </div>
     <div class="footer-copy">
       <span>&copy; MMXXVI &middot; Maison All of Cutz</span>
-      <span>reserve&#64;allofcutz.paris</span>
+      <span>contact&#64;allofcutz.paris</span>
     </div>
   </div>
 </footer>
