@@ -12,7 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 const FRAME_COUNT = 121;
 const FRAME_SPEED = 2.0;
-const IMAGE_SCALE = 0.86;
+const IMAGE_SCALE = 1.0; // 1 = true cover, no padding bars on any edge
 
 interface Slide {
   id: string;
@@ -322,7 +322,18 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const scale = Math.max(cw / iw, ch / ih) * IMAGE_SCALE;
     const dw = iw * scale;
     const dh = ih * scale;
-    const dx = (cw - dw) / 2;
+
+    // On mobile, anchor near the LEFT but push a few pixels into negative
+    // (image left edge sits ~25 CSS px LEFT of the viewport) so the very-left
+    // sliver is sacrificed and the visible composition feels naturally framed.
+    const isMobile = window.innerWidth <= 760;
+    let dx: number;
+    if (isMobile && dw > cw) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dx = -25 * dpr;
+    } else {
+      dx = (cw - dw) / 2;
+    }
     const dy = (ch - dh) / 2;
 
     ctx.fillStyle = this.bgColor;
@@ -365,13 +376,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const centerFrame = document.querySelector('.carousel-slide.pos-0 .slide-frame');
     const allSlides = document.querySelectorAll('.carousel-slide');
     const navButtons = document.querySelectorAll('.carousel-nav');
-    const caption = document.querySelectorAll('.carousel-caption > *');
     const dots = document.querySelectorAll('.carousel-dot');
-    const rails = [
-      document.querySelector('.rail-l'),
-      document.querySelector('.rail-c'),
-      document.querySelector('.rail-r')
-    ].filter(Boolean) as Element[];
+    const bookBtn = document.querySelector('.hero-book');
 
     // Do NOT touch transforms on .carousel-slide — CSS owns them via pos-* classes.
     // Use clearProps so inline styles are removed after the tween (otherwise the
@@ -416,20 +422,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         0.75
       );
 
-    if (caption.length)
-      tl.from(
-        caption,
-        {
-          y: 14,
-          opacity: 0,
-          stagger: 0.06,
-          duration: 0.7,
-          ease: 'power3.out',
-          clearProps: 'all'
-        },
-        0.85
-      );
-
     if (dots.length)
       tl.from(
         dots,
@@ -441,21 +433,21 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           ease: 'power3.out',
           clearProps: 'all'
         },
-        0.95
+        0.8
       );
 
-    if (rails.length)
+    if (bookBtn)
       tl.from(
-        rails,
+        bookBtn,
         {
-          y: 18,
+          y: 26,
           opacity: 0,
-          stagger: 0.08,
-          duration: 0.8,
+          scale: 0.88,
+          duration: 1.0,
           ease: 'power3.out',
-          clearProps: 'all'
+          clearProps: 'opacity,transform'
         },
-        1.0
+        1.05
       );
   }
 

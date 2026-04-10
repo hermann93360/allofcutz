@@ -79,31 +79,21 @@
     </button>
   </div>
 
-  <div class="carousel-caption">
-    <span class="caption-index">{{ activeSlide.index }}</span>
-    <span class="caption-sep"></span>
-    <span class="caption-title">{{ activeSlide.title }}</span>
-    <span class="caption-counter">{{ pad(activeIndex + 1) }} &mdash; {{ pad(slides.length) }}</span>
-  </div>
+  <div class="hero-outro">
+    <div class="carousel-dots">
+      @for (slide of slides; track slide.id; let i = $index) {
+        <button
+          type="button"
+          class="carousel-dot"
+          [class.active]="i === activeIndex"
+          (click)="goToSlide(i)"
+          [attr.aria-label]="'Aller à l\'image ' + (i + 1)"></button>
+      }
+    </div>
 
-  <div class="carousel-dots">
-    @for (slide of slides; track slide.id; let i = $index) {
-      <button
-        type="button"
-        class="carousel-dot"
-        [class.active]="i === activeIndex"
-        (click)="goToSlide(i)"
-        [attr.aria-label]="'Aller à l\'image ' + (i + 1)"></button>
-    }
-  </div>
-
-  <!-- Bottom rail -->
-  <div class="hero-rail-bottom">
-    <span class="rail-l">48.8402&deg; N &nbsp;&middot;&nbsp; 2.3869&deg; E</span>
-    <span class="rail-c">
-      <span class="scroll-line"></span>
-    </span>
-    <span class="rail-r">Sur rendez-vous</span>
+    <a class="hero-book" href="#book">
+      <span class="book-text">Prendre rendez-vous</span>
+    </a>
   </div>
 </section>
 
