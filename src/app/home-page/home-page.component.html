@@ -1,0 +1,409 @@
+<!-- ============ LOADER ============ -->
+<div id="loader" #loader>
+  <div class="loader-inner">
+    <div class="loader-3d">
+      <img class="loader-mark-3d" src="logo-mark.png" alt="All of Cutz" />
+    </div>
+    <div class="loader-track">
+      <div id="loader-bar" #loaderBar></div>
+    </div>
+    <div class="loader-meta">
+      <span class="loader-label">Maison All of Cutz</span>
+      <span id="loader-percent" #loaderPercent>0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER — Floating pill navbar ============ -->
+<header class="site-header">
+  <nav class="nav-pill" aria-label="Navigation principale">
+    <a class="nav-brand" href="#hero" aria-label="All of Cutz">
+      <img class="nav-brand-img" src="logo-mark.png" alt="All of Cutz" />
+    </a>
+
+    <span class="nav-sep" aria-hidden="true"></span>
+
+    <ul class="nav-menu">
+      <li><a href="#maison">Maison</a></li>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#equipe">Équipe</a></li>
+      <li><a href="#visite">Visite</a></li>
+    </ul>
+
+    <span class="nav-sep" aria-hidden="true"></span>
+
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span class="status-label">Ouvert</span>
+    </div>
+
+    <a class="nav-cta" href="#book">
+      <span class="nav-cta-label">Réserver</span>
+      <span class="nav-cta-arrow">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="hero-grid">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Maison · Paris 12<sup>e</sup> · Ouvert en 2025</span>
+
+      <h1 class="hero-title">
+        <span class="title-line"><span class="title-inner">L&apos;art de la</span></span>
+        <span class="title-line"><span class="title-inner"><em>coupe</em>, toutes les têtes.</span></span>
+      </h1>
+
+      <p class="hero-sub">
+        Cheveux, barbe, soin, couleur.<br/>
+        Trois barbiers à Paris 12<sup>e</sup>. Sur rendez-vous.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="#book">
+          <span class="btn-label">Prendre rendez-vous</span>
+          <span class="btn-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+        <a class="btn-ghost" href="#prestations">
+          <span>Voir les prestations</span>
+        </a>
+      </div>
+
+      <ul class="hero-meta">
+        <li><span class="meta-key">Adresse</span><span class="meta-val">35 bd de Reuilly · 75012</span></li>
+        <li><span class="meta-key">Ouverture</span><span class="meta-val">6 jours / 7 · fermé le mardi</span></li>
+        <li><span class="meta-key">Avis</span><span class="meta-val">4.9 ★ · 1 000+ voix</span></li>
+      </ul>
+    </div>
+
+    <figure class="hero-visual">
+      <img class="hero-image" src="salon/salon-03-reception.jpg" alt="All of Cutz — La Maison" />
+      <figcaption class="hero-caption">
+        <span class="caption-num">001</span>
+        <span class="caption-text">La Maison · Paris 12<sup>e</sup></span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Découvrir</span>
+    <span class="scroll-line"><span class="scroll-line-inner"></span></span>
+  </div>
+</section>
+
+<!-- ============ MAISON ============ -->
+<section class="section maison" id="maison" data-reveal data-reveal-children=".maison-text > *, .maison-image">
+  <div class="section-head">
+    <span class="section-num">002</span>
+    <span class="section-rule"></span>
+    <span class="section-title">Maison</span>
+  </div>
+  <div class="maison-grid">
+    <figure class="maison-image">
+      <img src="salon/salon-01-vitrine.jpg" alt="All of Cutz — Vitrine" />
+    </figure>
+    <div class="maison-text">
+      <h2 class="display-h2">
+        Trois barbiers, <em>toutes</em> les têtes.
+      </h2>
+      <p class="lede">
+        Un nouveau barbershop, ouvert en 2025 à Paris 12<sup>e</sup>.
+        Déjà mille voix nous l&apos;ont dit&nbsp;: <strong>4.9 sur cinq</strong>, sur Google et Planity.
+      </p>
+      <p class="body">
+        Cheveux et barbe, oui. Mais aussi soins du cuir chevelu, couleur, défrisage,
+        curly &amp; waves, coiffures protectrices. Une chaise pour chaque texture,
+        une oreille pour chaque demande.
+      </p>
+      <dl class="maison-signature">
+        <div><dt>Ouvert en</dt><dd>2025</dd></div>
+        <div><dt>Quartier</dt><dd>Reuilly · 12<sup>e</sup></dd></div>
+        <div><dt>Réservation</dt><dd>En ligne · 7j sauf mardi</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRESTATIONS ============ -->
+<section class="section prestations" id="prestations" data-reveal data-reveal-children=".section-head, .display-h2, .prestations-intro, .service-group, .section-foot">
+  <div class="section-head">
+    <span class="section-num">003</span>
+    <span class="section-rule"></span>
+    <span class="section-title">Prestations</span>
+  </div>
+  <h2 class="display-h2">
+    Cheveux, <em>barbe</em>, et tout le reste.
+  </h2>
+  <p class="prestations-intro">
+    Sept catégories, une trentaine de prestations. Cliquez sur une ligne pour réserver
+    le créneau qui vous va.
+  </p>
+
+  <div class="service-list">
+    @for (group of serviceGroups; track group.title) {
+      <div class="service-group">
+        <header class="service-group-head">
+          <span class="service-group-num">{{ group.index }}</span>
+          <span class="service-group-rule"></span>
+          <span class="service-group-title">{{ group.title }}</span>
+        </header>
+        <ul class="service-rows">
+          @for (item of group.items; track item.name) {
+            @if (item.bookable === false) {
+              <li class="service-row service-row--info">
+                <div class="service-row-text">
+                  <span class="service-row-name">{{ item.name }}</span>
+                  @if (item.description) {
+                    <span class="service-row-desc">{{ item.description }}</span>
+                  }
+                  @if (item.note) {
+                    <span class="service-row-note">
+                      <a [href]="phoneTel">{{ item.note }}</a>
+                    </span>
+                  }
+                </div>
+                <span class="service-row-duration">{{ item.duration }}</span>
+                <span class="service-row-price">{{ item.price }}</span>
+              </li>
+            } @else {
+              <li class="service-row">
+                <a class="service-row-link" href="#book" [attr.aria-label]="'Réserver ' + item.name">
+                  <div class="service-row-text">
+                    <span class="service-row-name">{{ item.name }}</span>
+                    @if (item.description) {
+                      <span class="service-row-desc">{{ item.description }}</span>
+                    }
+                  </div>
+                  <span class="service-row-duration">{{ item.duration }}</span>
+                  <span class="service-row-price">{{ item.price }}</span>
+                  <span class="service-row-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            }
+          }
+        </ul>
+      </div>
+    }
+  </div>
+
+  <div class="section-foot">
+    <p class="section-note">
+      Tarifs étudiants sur présentation d&apos;une carte.
+      Pour les <em>tresses</em>, <em>locks</em> et <em>twists</em>, appelez-nous au
+      <a [href]="phoneTel">{{ phone }}</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ============ ÉQUIPE ============ -->
+<section class="section equipe" id="equipe" data-reveal data-reveal-children=".section-head, .display-h2, .team-card">
+  <div class="section-head">
+    <span class="section-num">004</span>
+    <span class="section-rule"></span>
+    <span class="section-title">L&apos;Équipe</span>
+  </div>
+  <h2 class="display-h2">
+    Trois barbiers, <em>trois</em> mains.
+  </h2>
+  <ul class="team-grid">
+    @for (m of team; track m.name) {
+      <li class="team-card">
+        <div class="team-portrait">
+          <span class="team-display">{{ m.name }}</span>
+          <span class="team-num">{{ m.index }}</span>
+        </div>
+        <div class="team-meta">
+          <span class="team-role">{{ m.role }}</span>
+        </div>
+      </li>
+    }
+  </ul>
+</section>
+
+<!-- ============ CHIFFRES ============ -->
+<section class="section chiffres" id="chiffres" data-reveal data-reveal-children=".section-head, .stat">
+  <div class="section-head light">
+    <span class="section-num">005</span>
+    <span class="section-rule"></span>
+    <span class="section-title">En Chiffres</span>
+  </div>
+  <div class="stats-grid">
+    @for (s of stats; track s.label) {
+      <div class="stat">
+        <span class="stat-number" [attr.data-value]="s.value" [attr.data-decimals]="s.decimals">0</span>
+        <span class="stat-suffix">{{ s.suffix }}</span>
+        <span class="stat-label">{{ s.label }}</span>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ============ GALERIE ============ -->
+<section class="section galerie" id="galerie" data-reveal data-reveal-children=".section-head, .display-h2, .g-img">
+  <div class="section-head">
+    <span class="section-num">006</span>
+    <span class="section-rule"></span>
+    <span class="section-title">L&apos;Atelier en images</span>
+  </div>
+  <h2 class="display-h2">
+    Une <em>matière</em>, une lumière.
+  </h2>
+  <div class="gallery-mosaic">
+    @for (g of gallery; track g.src) {
+      <figure class="g-img" [class]="'g-img ' + g.span">
+        <img [src]="g.src" [alt]="g.alt" loading="lazy" />
+        <figcaption>
+          <span class="g-num">{{ g.index }}</span>
+          <span class="g-cap">{{ g.caption }}</span>
+        </figcaption>
+      </figure>
+    }
+  </div>
+</section>
+
+<!-- ============ RÉSERVATION (Planity inline) ============ -->
+<section class="section booking" id="book" #bookingSection data-reveal data-reveal-children=".section-head, .display-h2, .booking-intro, .booking-frame">
+  <div class="section-head">
+    <span class="section-num">007</span>
+    <span class="section-rule"></span>
+    <span class="section-title">Réservation</span>
+  </div>
+  <h2 class="display-h2">
+    Choisissez votre <em>rituel</em>.
+  </h2>
+  <p class="booking-intro">
+    Sélectionnez la prestation, le coiffeur, votre créneau.<br/>
+    Confirmation immédiate par email. Annulation possible jusqu&apos;à 24h avant.
+  </p>
+  <div class="booking-frame">
+    <div class="booking-widget" #planityContainer></div>
+  </div>
+</section>
+
+<!-- ============ VISITE ============ -->
+<section class="section visite" id="visite" data-reveal data-reveal-children=".section-head, .visite-image, .visite-text > *">
+  <div class="section-head">
+    <span class="section-num">008</span>
+    <span class="section-rule"></span>
+    <span class="section-title">Visite</span>
+  </div>
+  <div class="visite-grid">
+    <div class="visite-text">
+      <h2 class="display-h2">
+        Prenez <em>place</em>.
+      </h2>
+      <p class="lede">
+        Les rendez-vous s&apos;ouvrent chaque premier lundi du mois, à l&apos;aube.
+        Une petite cérémonie. La ponctualité est appréciée.
+      </p>
+      <dl class="visite-info">
+        <div class="visite-info-row visite-info-row--full">
+          <dt>Horaires</dt>
+          <dd>
+            <ul class="visite-hours">
+              @for (h of hours; track h.day) {
+                <li class="visite-hour-row" [class.is-closed]="h.hours === 'Fermé'">
+                  <span class="visite-day">{{ h.day }}</span>
+                  <span class="visite-time">{{ h.hours }}</span>
+                </li>
+              }
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>Adresse</dt>
+          <dd>35 boulevard de Reuilly<br/>75012 Paris</dd>
+        </div>
+        <div>
+          <dt>Contact</dt>
+          <dd>
+            <a [href]="phoneTel">{{ phone }}</a><br/>
+            <a href="mailto:contact&#64;allofcutz.paris">contact&#64;allofcutz.paris</a>
+          </dd>
+        </div>
+      </dl>
+      <div class="visite-actions">
+        <a class="btn-primary" href="#book">
+          <span class="btn-label">Prendre rendez-vous</span>
+          <span class="btn-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+        <a class="btn-ghost" href="https://maps.google.com/?q=35+boulevard+de+Reuilly+75012+Paris" target="_blank" rel="noopener">
+          <span>Itinéraire</span>
+          <span class="cta-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+    <figure class="visite-image">
+      <img src="devanture.png" alt="All of Cutz — Devanture" />
+      <figcaption>
+        <span class="g-num">008</span>
+        <span class="g-cap">35 bd de Reuilly</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img class="footer-logo" src="logo-full.png" alt="All of Cutz — Hair Studio" />
+      <p class="footer-tagline">Maison de coiffure · Paris 12<sup>e</sup></p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Navigation pied de page">
+      <span class="footer-nav-title">Navigation</span>
+      <ul>
+        <li><a href="#maison">Maison</a></li>
+        <li><a href="#prestations">Prestations</a></li>
+        <li><a href="#equipe">L&apos;Équipe</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#visite">Visite</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer-info">
+      <span class="footer-nav-title">Maison</span>
+      <ul>
+        <li>35 boulevard de Reuilly · 75012 Paris</li>
+        <li>Lun · Mer — Jeu · 11h — 20h</li>
+        <li>Ven — Sam · 10h — 21h · Dim · 11h — 18h</li>
+        <li>Fermé le mardi</li>
+        <li><a [href]="phoneTel">{{ phone }}</a></li>
+        <li><a href="mailto:contact&#64;allofcutz.paris">contact&#64;allofcutz.paris</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-cta">
+      <span class="footer-nav-title">Rendez-vous</span>
+      <a class="btn-primary" href="#book">
+        <span class="btn-label">Réserver</span>
+        <span class="btn-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; MMXXVI · Maison All of Cutz</span>
+    <span>Site sur rendez-vous uniquement</span>
+  </div>
+</footer>
