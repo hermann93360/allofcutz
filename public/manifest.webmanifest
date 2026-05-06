@@ -1,0 +1,28 @@
+{
+  "name": "All of Cutz · Maison de coiffure",
+  "short_name": "All of Cutz",
+  "description": "Barbershop & maison de coiffure à Paris 12ᵉ. Réservation en ligne.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F6F7",
+  "theme_color": "#0F1115",
+  "lang": "fr-FR",
+  "dir": "ltr",
+  "categories": ["beauty", "lifestyle"],
+  "icons": [
+    {
+      "src": "logo-def.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo-def.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

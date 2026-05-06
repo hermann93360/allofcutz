@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://allofcutz.paris/</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://allofcutz.paris/salon/salon-03-reception.jpg</image:loc>
+      <image:title>All of Cutz — La Maison · Paris 12ᵉ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://allofcutz.paris/salon/salon-01-vitrine.jpg</image:loc>
+      <image:title>All of Cutz — Vitrine</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://allofcutz.paris/salon/salon-04-stations.jpg</image:loc>
+      <image:title>All of Cutz — Stations de coupe</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://allofcutz.paris/reservation</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>

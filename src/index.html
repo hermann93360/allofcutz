@@ -1,16 +1,160 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>All of Cutz — L'Atelier de Coiffure · Paris 12e</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="All of Cutz — atelier de coiffure parisien dédié aux coupes signature, aux couleurs et aux rituels sur mesure. 35 boulevard de Reuilly, 75012 Paris.">
-  <meta name="theme-color" content="#F5F6F7">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
+  <!-- Primary -->
+  <title>All of Cutz · Maison de coiffure & barbershop · Paris 12ᵉ</title>
+  <meta name="description" content="All of Cutz — barbershop & maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur, défrisage, coiffures protectrices. 4.9★ sur 1 000+ avis. Réservation en ligne.">
+  <meta name="author" content="Maison All of Cutz">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="theme-color" content="#0F1115">
+  <meta name="format-detection" content="telephone=yes">
+  <link rel="canonical" href="https://allofcutz.paris/">
+
+  <!-- Geo -->
+  <meta name="geo.region" content="FR-75">
+  <meta name="geo.placename" content="Paris">
+  <meta name="geo.position" content="48.840;2.395">
+  <meta name="ICBM" content="48.840, 2.395">
+
+  <!-- Favicons (logo-def.png is a 500x500 RGBA — modern browsers handle scaling) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="logo-def.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="logo-def.png">
+  <link rel="shortcut icon" href="logo-def.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="logo-def.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="logo-def.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="logo-def.png">
+  <meta name="apple-mobile-web-app-title" content="All of Cutz">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="application-name" content="All of Cutz">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, Slack…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="All of Cutz">
+  <meta property="og:title" content="All of Cutz · Maison de coiffure & barbershop · Paris 12ᵉ">
+  <meta property="og:description" content="Barbershop & maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur. 4.9★ sur 1 000+ avis. Réservation en ligne.">
+  <meta property="og:url" content="https://allofcutz.paris/">
+  <meta property="og:image" content="https://allofcutz.paris/salon/salon-03-reception.jpg">
+  <meta property="og:image:secure_url" content="https://allofcutz.paris/salon/salon-03-reception.jpg">
+  <meta property="og:image:width" content="1764">
+  <meta property="og:image:height" content="1176">
+  <meta property="og:image:alt" content="All of Cutz — La Maison · Paris 12ᵉ">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="All of Cutz · Maison de coiffure & barbershop · Paris 12ᵉ">
+  <meta name="twitter:description" content="Barbershop & maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur. 4.9★ sur 1 000+ avis.">
+  <meta name="twitter:image" content="https://allofcutz.paris/salon/salon-03-reception.jpg">
+  <meta name="twitter:image:alt" content="All of Cutz — La Maison · Paris 12ᵉ">
+
+  <!-- Performance hints -->
   <link rel="preload" href="fonts/satoshi/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/satoshi/Satoshi-VariableItalic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://d2skjte8udjqxw.cloudfront.net" crossorigin>
+  <link rel="dns-prefetch" href="https://d2skjte8udjqxw.cloudfront.net">
+
+  <!-- Structured data: HairSalon (LocalBusiness) — drives Google rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "@id": "https://allofcutz.paris/#salon",
+    "name": "All of Cutz",
+    "alternateName": "Maison All of Cutz",
+    "description": "Barbershop et maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur, défrisage, coiffures protectrices. Trois barbiers — Jenny, Jimmony, Emir.",
+    "url": "https://allofcutz.paris/",
+    "logo": "https://allofcutz.paris/logo-def.png",
+    "image": [
+      "https://allofcutz.paris/salon/salon-03-reception.jpg",
+      "https://allofcutz.paris/salon/salon-01-vitrine.jpg",
+      "https://allofcutz.paris/salon/salon-04-stations.jpg"
+    ],
+    "telephone": "+33695692118",
+    "email": "contact@allofcutz.paris",
+    "priceRange": "€€",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Cash, Credit Card",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "35 boulevard de Reuilly",
+      "addressLocality": "Paris",
+      "postalCode": "75012",
+      "addressRegion": "Île-de-France",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.840,
+      "longitude": 2.395
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday",    "opens": "11:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "11:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday",  "opens": "11:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday",    "opens": "10:00", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday",  "opens": "10:00", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday",    "opens": "11:00", "closes": "18:00" }
+    ],
+    "areaServed": { "@type": "City", "name": "Paris" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "1000",
+      "reviewCount": "1000"
+    },
+    "potentialAction": {
+      "@type": "ReserveAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://allofcutz.paris/reservation",
+        "inLanguage": "fr-FR",
+        "actionPlatform": [
+          "http://schema.org/DesktopWebPlatform",
+          "http://schema.org/MobileWebPlatform"
+        ]
+      },
+      "result": { "@type": "Reservation", "name": "Rendez-vous coiffure" }
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Prestations All of Cutz",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Coupe + barbe" }, "price": "35.00", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Coupe + barbe + soin complet" }, "price": "75.00", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Coupe homme + coiffage" }, "price": "25.00", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Taille barbe + serviette + vapeur" }, "price": "25.00", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Soin visage" }, "price": "49.00", "priceCurrency": "EUR" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Coloration cheveux mi-longs" }, "price": "50.00", "priceCurrency": "EUR" }
+      ]
+    },
+    "employee": [
+      { "@type": "Person", "name": "Jenny",   "jobTitle": "Barbier" },
+      { "@type": "Person", "name": "Jimmony", "jobTitle": "Barbier" },
+      { "@type": "Person", "name": "Emir",    "jobTitle": "Barbier" }
+    ]
+  }
+  </script>
+
+  <!-- Structured data: WebSite (with SearchAction reserved) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://allofcutz.paris/#website",
+    "url": "https://allofcutz.paris/",
+    "name": "All of Cutz",
+    "publisher": { "@id": "https://allofcutz.paris/#salon" },
+    "inLanguage": "fr-FR"
+  }
+  </script>
 </head>
 <body>
   <app-root></app-root>

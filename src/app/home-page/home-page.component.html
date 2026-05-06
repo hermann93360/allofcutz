@@ -1,15 +1,10 @@
 <!-- ============ LOADER ============ -->
 <div id="loader" #loader>
-  <div class="loader-inner">
-    <div class="loader-3d">
-      <img class="loader-mark-3d" src="logo-mark.png" alt="All of Cutz" />
-    </div>
-    <div class="loader-track">
-      <div id="loader-bar" #loaderBar></div>
-    </div>
-    <div class="loader-meta">
-      <span class="loader-label">Maison All of Cutz</span>
-      <span id="loader-percent" #loaderPercent>0%</span>
+  <div class="loader-stack">
+    <img class="loader-mark" src="logo-mark.png" alt="All of Cutz" />
+    <span class="loader-name">All of Cutz</span>
+    <div class="loader-line">
+      <div class="loader-line-fill" #loaderBar></div>
     </div>
   </div>
 </div>
@@ -18,7 +13,7 @@
 <header class="site-header">
   <nav class="nav-pill" aria-label="Navigation principale">
     <a class="nav-brand" href="#hero" aria-label="All of Cutz">
-      <img class="nav-brand-img" src="logo-mark.png" alt="All of Cutz" />
+      <img class="nav-brand-img" src="logo-def.png" alt="All of Cutz" />
     </a>
 
     <span class="nav-sep" aria-hidden="true"></span>
@@ -95,11 +90,6 @@
       </figcaption>
     </figure>
   </div>
-
-  <div class="hero-scroll" aria-hidden="true">
-    <span>Découvrir</span>
-    <span class="scroll-line"><span class="scroll-line-inner"></span></span>
-  </div>
 </section>
 
 <!-- ============ MAISON ============ -->
@@ -136,66 +126,39 @@
 </section>
 
 <!-- ============ PRESTATIONS ============ -->
-<section class="section prestations" id="prestations" data-reveal data-reveal-children=".section-head, .display-h2, .prestations-intro, .service-group, .section-foot">
+<section class="section prestations" id="prestations" data-reveal data-reveal-children=".section-head, .display-h2, .prestations-intro, .service-card, .section-foot">
   <div class="section-head">
     <span class="section-num">003</span>
     <span class="section-rule"></span>
     <span class="section-title">Prestations</span>
   </div>
   <h2 class="display-h2">
-    Cheveux, <em>barbe</em>, et tout le reste.
+    Six rituels, <em>une</em> exigence.
   </h2>
   <p class="prestations-intro">
-    Sept catégories, une trentaine de prestations. Cliquez sur une ligne pour réserver
-    le créneau qui vous va.
+    Une sélection de nos prestations principales. Le menu complet — couleur, défrisage,
+    coiffures protectrices — est disponible dans le module de réservation ci-dessous.
   </p>
 
-  <div class="service-list">
-    @for (group of serviceGroups; track group.title) {
-      <div class="service-group">
-        <header class="service-group-head">
-          <span class="service-group-num">{{ group.index }}</span>
-          <span class="service-group-rule"></span>
-          <span class="service-group-title">{{ group.title }}</span>
+  <ul class="services-grid">
+    @for (s of services; track s.name) {
+      <li class="service-card">
+        <header class="service-head">
+          <span class="service-num">{{ s.index }}</span>
+          <span class="service-price">{{ s.price }}</span>
         </header>
-        <ul class="service-rows">
-          @for (item of group.items; track item.name) {
-            @if (item.bookable === false) {
-              <li class="service-row service-row--info">
-                <div class="service-row-text">
-                  <span class="service-row-name">{{ item.name }}</span>
-                  @if (item.description) {
-                    <span class="service-row-desc">{{ item.description }}</span>
-                  }
-                  @if (item.note) {
-                    <span class="service-row-note">
-                      <a [href]="phoneTel">{{ item.note }}</a>
-                    </span>
-                  }
-                </div>
-                <span class="service-row-duration">{{ item.duration }}</span>
-                <span class="service-row-price">{{ item.price }}</span>
-              </li>
-            } @else {
-              <li class="service-row">
-                <a class="service-row-link" href="#book" [attr.aria-label]="'Réserver ' + item.name">
-                  <div class="service-row-text">
-                    <span class="service-row-name">{{ item.name }}</span>
-                    @if (item.description) {
-                      <span class="service-row-desc">{{ item.description }}</span>
-                    }
-                  </div>
-                  <span class="service-row-duration">{{ item.duration }}</span>
-                  <span class="service-row-price">{{ item.price }}</span>
-                  <span class="service-row-arrow" aria-hidden="true">→</span>
-                </a>
-              </li>
-            }
-          }
-        </ul>
-      </div>
+        <h3 class="service-name">{{ s.name }}</h3>
+        <p class="service-desc">{{ s.description }}</p>
+        <footer class="service-foot-card">
+          <span class="service-duration">{{ s.duration }}</span>
+          <a class="service-cta" href="#book" [attr.aria-label]="'Réserver ' + s.name">
+            <span>Réserver</span>
+            <span class="cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </footer>
+      </li>
     }
-  </div>
+  </ul>
 
   <div class="section-foot">
     <p class="section-note">
@@ -262,7 +225,22 @@
   <div class="gallery-mosaic">
     @for (g of gallery; track g.src) {
       <figure class="g-img" [class]="'g-img ' + g.span">
-        <img [src]="g.src" [alt]="g.alt" loading="lazy" />
+        @if (g.video) {
+          <video
+            [src]="g.video"
+            [poster]="g.src"
+            [attr.aria-label]="g.alt"
+            muted
+            loop
+            playsinline
+            preload="metadata"></video>
+          <span class="g-live" aria-hidden="true">
+            <span class="g-live-dot"></span>
+            <span>Live</span>
+          </span>
+        } @else {
+          <img [src]="g.src" [alt]="g.alt" loading="lazy" />
+        }
         <figcaption>
           <span class="g-num">{{ g.index }}</span>
           <span class="g-cap">{{ g.caption }}</span>

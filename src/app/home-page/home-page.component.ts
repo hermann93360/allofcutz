@@ -4,25 +4,21 @@ import {
   ElementRef,
   Inject,
   OnDestroy,
+  OnInit,
   PLATFORM_ID,
   ViewChild
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
 import { mountPlanity } from '../planity';
+import { applySeo } from '../seo';
 
-interface ServiceItem {
+interface Service {
+  index: string;
   name: string;
-  description?: string;
+  description: string;
   duration: string;
   price: string;
-  bookable?: boolean;
-  note?: string;
-}
-
-interface ServiceGroup {
-  index: string;
-  title: string;
-  items: ServiceItem[];
 }
 
 interface TeamMember {
@@ -40,6 +36,7 @@ interface Stat {
 
 interface GalleryImage {
   src: string;
+  video?: string;
   alt: string;
   caption: string;
   index: string;
@@ -57,118 +54,55 @@ interface OpeningDay {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
-export class HomePageComponent implements AfterViewInit, OnDestroy {
-  readonly serviceGroups: ServiceGroup[] = [
+export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
+  readonly services: Service[] = [
     {
       index: '01',
-      title: 'Coupe + barbe',
-      items: [
-        { name: 'Coupe + barbe', duration: '45 min', price: '35 €' },
-        { name: 'Coupe transformation + barbe', duration: '1 h', price: '45 €' },
-        {
-          name: 'Coupe + barbe + soin complet',
-          description: 'Visage, cheveux, barbe.',
-          duration: '1 h 30',
-          price: '75 €'
-        },
-        {
-          name: 'Coupe + barbe + soin de barbe',
-          description:
-            'Soin du cuir chevelu et soin de la barbe avec vapeur et huiles essentielles.',
-          duration: '1 h 30',
-          price: '45 €'
-        },
-        { name: 'Rasage uniforme + barbe', duration: '45 min', price: '25 €' }
-      ]
+      name: 'Coupe + barbe',
+      description:
+        'L\'essentiel. Coupe à sec, barbe travaillée, finition propre.',
+      duration: '45 min',
+      price: '35 €'
     },
     {
       index: '02',
-      title: 'Cheveux',
-      items: [
-        {
-          name: 'Coupe transformation homme',
-          description:
-            'À partir de plus de 2 mois, pour un grand changement.',
-          duration: '1 h',
-          price: '35 €'
-        },
-        {
-          name: 'Coupe transformation étudiant',
-          description:
-            'À partir de plus de 2 mois, pour un grand changement.',
-          duration: '1 h',
-          price: '30 €'
-        },
-        { name: 'Coupe homme + coiffage', duration: '30 min', price: '25 €' },
-        { name: 'Coupe étudiante', duration: '30 min', price: '20 €' },
-        { name: 'Contour', duration: '15 min', price: '10 €' }
-      ]
+      name: 'Coupe + barbe + soin complet',
+      description:
+        'Le rituel intégral. Visage, cheveux et barbe — vapeur, huiles, finition.',
+      duration: '1 h 30',
+      price: '75 €'
     },
     {
       index: '03',
-      title: 'Barbe',
-      items: [
-        { name: 'Rasage uniforme', duration: '30 min', price: '20 €' },
-        { name: 'Rasage intégral', duration: '30 min', price: '15 €' },
-        { name: 'Taille de barbe + contour', duration: '30 min', price: '15 €' },
-        {
-          name: 'Taille barbe + serviette + vapeur',
-          duration: '30 min',
-          price: '25 €'
-        },
-        { name: 'Taille moustache + bouc', duration: '30 min', price: '10 €' }
-      ]
+      name: 'Coupe homme + coiffage',
+      description:
+        'Coupe seule, propre et rapide. Coiffage compris.',
+      duration: '30 min',
+      price: '25 €'
     },
     {
       index: '04',
-      title: 'Soins',
-      items: [
-        { name: 'Soin barbe', duration: '30 min', price: '15 €' },
-        { name: 'Soin cheveux', duration: '30 min', price: '15 €' },
-        { name: 'Soin visage', duration: '45 min', price: '49 €' }
-      ]
+      name: 'Taille barbe + serviette + vapeur',
+      description:
+        'Barbe seule, façon barbershop. Serviette chaude, vapeur, baume.',
+      duration: '30 min',
+      price: '25 €'
     },
     {
       index: '05',
-      title: 'Coloration & décoloration',
-      items: [
-        { name: 'Coloration cheveux courts', duration: '1 h 30', price: '30 €' },
-        { name: 'Coloration cheveux mi-longs', duration: '1 h 30', price: '50 €' },
-        { name: 'Coloration cheveux longs', duration: '1 h 30', price: '70 €' }
-      ]
+      name: 'Soin visage',
+      description:
+        'Quarante-cinq minutes pour la peau. Diagnostic, vapeur, soin sur mesure.',
+      duration: '45 min',
+      price: '49 €'
     },
     {
       index: '06',
-      title: 'Curly · waves · défrisage',
-      items: [
-        { name: 'Curly', duration: '30 min', price: '25 €' },
-        { name: 'Waves', duration: '30 min', price: '25 €' },
-        { name: 'Défrisage cheveux courts', duration: '1 h 30', price: '30 €' },
-        { name: 'Défrisage cheveux mi-longs', duration: '1 h 30', price: '50 €' },
-        { name: 'Défrisage cheveux longs', duration: '1 h 30', price: '70 €' }
-      ]
-    },
-    {
-      index: '07',
-      title: 'Coiffures protectrices',
-      items: [
-        {
-          name: 'Tresses · nattes',
-          description: 'Réservation par téléphone uniquement.',
-          duration: '—',
-          price: 'À partir de 40 €',
-          bookable: false,
-          note: '06 95 69 21 18'
-        },
-        {
-          name: 'Locks · twists',
-          description: 'Sur devis. Réservation par téléphone uniquement.',
-          duration: '—',
-          price: 'Sur devis',
-          bookable: false,
-          note: '06 95 69 21 18'
-        }
-      ]
+      name: 'Coloration cheveux mi-longs',
+      description:
+        'Couleur naturelle, faite main. Diagnostic, application, glaçage final.',
+      duration: '1 h 30',
+      price: '50 €'
     }
   ];
 
@@ -201,8 +135,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   readonly gallery: GalleryImage[] = [
     {
       src: 'salon/salon-03-reception.jpg',
-      alt: 'All of Cutz — Réception et comptoir',
-      caption: 'La Maison',
+      video: 'video.mp4',
+      alt: 'All of Cutz — L\'atelier en mouvement',
+      caption: 'L\'atelier · en mouvement',
       index: '001',
       span: 'g-hero'
     },
@@ -238,14 +173,28 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('loader') loader!: ElementRef<HTMLDivElement>;
   @ViewChild('loaderBar') loaderBar!: ElementRef<HTMLDivElement>;
-  @ViewChild('loaderPercent') loaderPercent!: ElementRef<HTMLSpanElement>;
   @ViewChild('planityContainer') planityContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('bookingSection') bookingSection!: ElementRef<HTMLElement>;
 
   private cleanupFns: Array<() => void> = [];
   private lenis: any = null;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private doc: Document,
+    private metaService: Meta
+  ) {}
+
+  ngOnInit(): void {
+    applySeo(this.metaService, this.doc, {
+      title: 'All of Cutz · Maison de coiffure & barbershop · Paris 12ᵉ',
+      description:
+        'All of Cutz — barbershop & maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur, défrisage, coiffures protectrices. 4.9★ sur 1 000+ avis. Réservation en ligne.',
+      path: '/',
+      imageUrl: 'https://allofcutz.paris/salon/salon-03-reception.jpg',
+      imageAlt: 'All of Cutz — La Maison · Paris 12ᵉ'
+    });
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -292,31 +241,53 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     this.initCounters(gsap, ScrollTrigger);
     this.initAnchorScroll(lenis);
     this.initPlanityLazyMount();
+    this.initGalleryVideo();
     ScrollTrigger.refresh();
+  }
+
+  private initGalleryVideo(): void {
+    const video = document.querySelector<HTMLVideoElement>('.g-hero video');
+    if (!video) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      video.play().catch(() => {});
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(video);
+    this.cleanupFns.push(() => observer.disconnect());
   }
 
   private hideLoader(gsap: any): void {
     const el = this.loader?.nativeElement;
     if (!el) return;
     const bar = this.loaderBar?.nativeElement;
-    const pct = this.loaderPercent?.nativeElement;
-    if (bar && pct) {
+    if (bar) {
       const obj = { v: 0 };
       gsap.to(obj, {
         v: 100,
-        duration: 1.0,
+        duration: 0.9,
         ease: 'power2.out',
         onUpdate: () => {
           bar.style.width = obj.v + '%';
-          pct.textContent = Math.round(obj.v) + '%';
         }
       });
     }
     gsap.to(el, {
       opacity: 0,
-      duration: 0.7,
+      duration: 0.6,
       ease: 'power3.out',
-      delay: 1.25,
+      delay: 1.05,
       onComplete: () => {
         el.style.display = 'none';
       }
@@ -343,7 +314,6 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     const actions = document.querySelector('.hero-actions');
     const meta = document.querySelectorAll('.hero-meta li');
     const visual = document.querySelector('.hero-visual');
-    const scrollCue = document.querySelector('.hero-scroll');
 
     const tl = gsap.timeline({ delay: 0.5 });
 
@@ -389,9 +359,6 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
         },
         0.2
       );
-
-    if (scrollCue)
-      tl.from(scrollCue, { opacity: 0, duration: 0.8, ease: 'power2.out' }, 1.4);
   }
 
   private initSectionReveals(gsap: any, ScrollTrigger: any): void {
