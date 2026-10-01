@@ -14,7 +14,6 @@ import { mountPlanity } from '../planity';
 import { applySeo } from '../seo';
 
 interface Service {
-  index: string;
   name: string;
   description: string;
   duration: string;
@@ -22,9 +21,10 @@ interface Service {
 }
 
 interface TeamMember {
-  index: string;
   name: string;
   role: string;
+  photo: string;
+  photoAlt: string;
 }
 
 interface Stat {
@@ -36,11 +36,22 @@ interface Stat {
 
 interface GalleryImage {
   src: string;
-  video?: string;
   alt: string;
   caption: string;
-  index: string;
-  span: string;
+  span: 'g-tall' | 'g-square';
+}
+
+interface Skill {
+  name: string;
+  description: string;
+  src: string;
+  alt: string;
+}
+
+interface Product {
+  name: string;
+  category: string;
+  src: string;
 }
 
 interface OpeningDay {
@@ -57,7 +68,6 @@ interface OpeningDay {
 export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly services: Service[] = [
     {
-      index: '01',
       name: 'Coupe + barbe',
       description:
         'L\'essentiel. Coupe à sec, barbe travaillée, finition propre.',
@@ -65,15 +75,13 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
       price: '35 €'
     },
     {
-      index: '02',
       name: 'Coupe + barbe + soin complet',
       description:
-        'Le rituel intégral. Visage, cheveux et barbe — vapeur, huiles, finition.',
+        'Le rituel intégral. Visage, cheveux et barbe, vapeur, huiles, finition.',
       duration: '1 h 30',
       price: '75 €'
     },
     {
-      index: '03',
       name: 'Coupe homme + coiffage',
       description:
         'Coupe seule, propre et rapide. Coiffage compris.',
@@ -81,7 +89,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
       price: '25 €'
     },
     {
-      index: '04',
       name: 'Taille barbe + serviette + vapeur',
       description:
         'Barbe seule, façon barbershop. Serviette chaude, vapeur, baume.',
@@ -89,7 +96,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
       price: '25 €'
     },
     {
-      index: '05',
       name: 'Soin visage',
       description:
         'Quarante-cinq minutes pour la peau. Diagnostic, vapeur, soin sur mesure.',
@@ -97,7 +103,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
       price: '49 €'
     },
     {
-      index: '06',
       name: 'Coloration cheveux mi-longs',
       description:
         'Couleur naturelle, faite main. Diagnostic, application, glaçage final.',
@@ -107,26 +112,74 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   readonly team: TeamMember[] = [
-    { index: '001', name: 'Jenny', role: 'Barbier' },
-    { index: '002', name: 'Jimmony', role: 'Barbier' },
-    { index: '003', name: 'Emir', role: 'Barbier' }
+    {
+      name: 'Emir',
+      role: 'Barbier',
+      photo: 'shooting/portrait-barbier-bouc-01.jpg',
+      photoAlt: 'shooting/portrait-barbier-bouc-02.jpg'
+    },
+    {
+      name: 'Mehdi',
+      role: 'Barbier',
+      photo: 'shooting/portrait-barbier-locks-01.jpg',
+      photoAlt: 'shooting/portrait-barbier-locks-02.jpg'
+    },
+    {
+      name: 'Ilan',
+      role: 'Barbier',
+      photo: 'shooting/portrait-barbier-jeune-02.jpg',
+      photoAlt: 'shooting/portrait-barbier-jeune-01.jpg'
+    },
+    {
+      name: 'Jenny',
+      role: 'Barbier',
+      photo: 'shooting/portrait-barbier-barbe-02.jpg',
+      photoAlt: 'shooting/portrait-barbier-barbe-01.jpg'
+    }
+  ];
+
+  readonly skills: Skill[] = [
+    {
+      name: 'Dégradés & contours',
+      description: 'Fades nets, contours tracés à la tondeuse, finitions précises.',
+      src: 'shooting/coupe-degrade-11.jpg',
+      alt: 'Dégradé à la tondeuse'
+    },
+    {
+      name: 'Boucles & waves',
+      description: 'Des coupes qui respectent la boucle, du curly au wavy.',
+      src: 'shooting/coupe-boucles-02.jpg',
+      alt: 'Coupe sur cheveux bouclés'
+    },
+    {
+      name: 'Barbe & soin',
+      description: 'Taille aux ciseaux, serviette chaude, vapeur et baume.',
+      src: 'shooting/coupe-ciseaux-barbe-02.jpg',
+      alt: 'Taille de barbe aux ciseaux'
+    },
+    {
+      name: 'Tresses & protectrices',
+      description: 'Twists, tresses et coiffures protectrices, sur rendez-vous.',
+      src: 'shooting/tresses-06.jpg',
+      alt: 'Pose de tresses'
+    }
   ];
 
   readonly stats: Stat[] = [
     { value: 4.9, decimals: 1, suffix: '★', label: 'Note moyenne' },
     { value: 1000, decimals: 0, suffix: '+', label: 'Avis Google & Planity' },
-    { value: 3, decimals: 0, suffix: 'barbiers', label: 'Toutes textures' },
+    { value: 4, decimals: 0, suffix: 'barbiers', label: 'Toutes textures' },
     { value: 6, decimals: 0, suffix: '/ 7', label: 'Jours ouverts' }
   ];
 
   readonly hours: OpeningDay[] = [
-    { day: 'Lundi', hours: '11h — 20h' },
+    { day: 'Lundi', hours: '11h à 20h' },
     { day: 'Mardi', hours: 'Fermé' },
-    { day: 'Mercredi', hours: '11h — 20h' },
-    { day: 'Jeudi', hours: '11h — 20h' },
-    { day: 'Vendredi', hours: '10h — 21h' },
-    { day: 'Samedi', hours: '10h — 21h' },
-    { day: 'Dimanche', hours: '11h — 18h' }
+    { day: 'Mercredi', hours: '11h à 20h' },
+    { day: 'Jeudi', hours: '11h à 20h' },
+    { day: 'Vendredi', hours: '10h à 21h' },
+    { day: 'Samedi', hours: '10h à 21h' },
+    { day: 'Dimanche', hours: '11h à 18h' }
   ];
 
   readonly phone = '06 95 69 21 18';
@@ -134,47 +187,82 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   readonly gallery: GalleryImage[] = [
     {
-      src: 'salon/salon-03-reception.jpg',
-      video: 'video.mp4',
-      alt: 'All of Cutz — L\'atelier en mouvement',
-      caption: 'L\'atelier · en mouvement',
-      index: '001',
-      span: 'g-hero'
-    },
-    {
-      src: 'salon/salon-01-vitrine.jpg',
-      alt: 'All of Cutz — Vitrine',
-      caption: 'La Vitrine',
-      index: '002',
+      src: 'shooting/coupe-degrade-08.jpg',
+      alt: 'Dégradé à la tondeuse, gros plan',
+      caption: 'Le Dégradé',
       span: 'g-tall'
     },
     {
-      src: 'salon/salon-04-stations.jpg',
-      alt: 'All of Cutz — Stations de coupe',
-      caption: 'Les Stations',
-      index: '003',
-      span: 'g-square'
-    },
-    {
-      src: 'salon/salon-02-bac.jpg',
-      alt: 'All of Cutz — Espace bac',
-      caption: 'Le Rituel',
-      index: '004',
-      span: 'g-square'
-    },
-    {
-      src: 'salon/salon-05-interieur.jpg',
-      alt: 'All of Cutz — Vue d\'ensemble',
+      src: 'shooting/salon-en-action-04.jpg',
+      alt: 'Barbier au travail dans le salon',
       caption: 'L\'Atelier',
-      index: '005',
-      span: 'g-wide'
+      span: 'g-square'
+    },
+    {
+      src: 'shooting/tresses-07.jpg',
+      alt: 'Pose de twists rouge et noir',
+      caption: 'Les Tresses',
+      span: 'g-tall'
+    },
+    {
+      src: 'shooting/interieur-salon-03.jpg',
+      alt: 'Le salon, accueil et postes de coupe',
+      caption: 'Le Salon',
+      span: 'g-square'
+    },
+    {
+      src: 'shooting/coupe-contours.jpg',
+      alt: 'Contours à la tondeuse',
+      caption: 'Les Contours',
+      span: 'g-tall'
+    },
+    {
+      src: 'shooting/soin-shampoing-bac-02.jpg',
+      alt: 'Shampoing au bac',
+      caption: 'Le Rituel',
+      span: 'g-tall'
+    },
+    {
+      src: 'shooting/interieur-espace-bac-03.jpg',
+      alt: 'L\'espace bac',
+      caption: 'L\'Espace Bac',
+      span: 'g-square'
+    },
+    {
+      src: 'shooting/coupe-boucles-01.jpg',
+      alt: 'Coupe sur cheveux bouclés',
+      caption: 'Les Boucles',
+      span: 'g-tall'
+    },
+    {
+      src: 'shooting/salon-en-action-05.jpg',
+      alt: 'Deux barbiers au travail',
+      caption: 'À Quatre Mains',
+      span: 'g-square'
+    },
+    {
+      src: 'shooting/interieur-salon-02.jpg',
+      alt: 'Le salon, vue sur l\'accueil',
+      caption: 'L\'Accueil',
+      span: 'g-square'
     }
+  ];
+
+  readonly products: Product[] = [
+    { name: 'Conditionneur Nutri', category: 'Cheveux', src: 'shooting/produit-conditionneur-nutri.jpg' },
+    { name: 'Crème Bouclante', category: 'Cheveux', src: 'shooting/produit-creme-bouclante.jpg' },
+    { name: 'Masque Nutri', category: 'Cheveux', src: 'shooting/produit-masque-nutri.jpg' },
+    { name: 'Gum', category: 'Coiffage', src: 'shooting/produit-gum.jpg' },
+    { name: 'Shampooing à barbe', category: 'Barbe', src: 'shooting/produit-shampooing-barbe.jpg' },
+    { name: 'Huile à barbe', category: 'Barbe', src: 'shooting/produit-huile-barbe.jpg' },
+    { name: 'Baume à barbe', category: 'Barbe', src: 'shooting/produit-baume-barbe.jpg' }
   ];
 
   @ViewChild('loader') loader!: ElementRef<HTMLDivElement>;
   @ViewChild('loaderBar') loaderBar!: ElementRef<HTMLDivElement>;
   @ViewChild('planityContainer') planityContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('bookingSection') bookingSection!: ElementRef<HTMLElement>;
+  @ViewChild('heroVideo') heroVideo!: ElementRef<HTMLVideoElement>;
 
   private cleanupFns: Array<() => void> = [];
   private lenis: any = null;
@@ -187,17 +275,18 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     applySeo(this.metaService, this.doc, {
-      title: 'All of Cutz · Maison de coiffure & barbershop · Paris 12ᵉ',
+      title: 'All of Cutz · Barbershop & coiffure · Paris 12ᵉ',
       description:
-        'All of Cutz — barbershop & maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur, défrisage, coiffures protectrices. 4.9★ sur 1 000+ avis. Réservation en ligne.',
+        'All of Cutz, barbershop et salon de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur, défrisage, tresses. 4.9★ sur plus de 1 000 avis. Réservation en ligne.',
       path: '/',
       imageUrl: 'https://allofcutz.paris/salon/salon-03-reception.jpg',
-      imageAlt: 'All of Cutz — La Maison · Paris 12ᵉ'
+      imageAlt: 'All of Cutz · Paris 12ᵉ'
     });
   }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    this.initHeroVideo();
     Promise.all([
       import('lenis'),
       import('gsap'),
@@ -241,31 +330,52 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initCounters(gsap, ScrollTrigger);
     this.initAnchorScroll(lenis);
     this.initPlanityLazyMount();
-    this.initGalleryVideo();
     ScrollTrigger.refresh();
   }
 
-  private initGalleryVideo(): void {
-    const video = document.querySelector<HTMLVideoElement>('.g-hero video');
+  /**
+   * Background video: muted autoplay loop. Stays on the poster when the
+   * visitor asks for reduced motion or data saving, and pauses off-screen.
+   */
+  private initHeroVideo(): void {
+    const video = this.heroVideo?.nativeElement;
     if (!video) return;
-    if (typeof IntersectionObserver === 'undefined') {
-      video.play().catch(() => {});
+    const hero = video.closest('.hero');
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = (navigator as any).connection?.saveData === true;
+    if (reduceMotion || saveData) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.preload = 'none';
       return;
     }
+
+    // iOS only autoplays when `muted` is set as a property too.
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const markPlaying = () => hero?.classList.add('is-playing');
+    video.addEventListener('playing', markPlaying, { once: true });
+    if (!video.paused && video.readyState >= 3) markPlaying();
+    const play = () => video.play().catch(() => {});
+    play();
+
+    if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
+          if (entry.isIntersecting) play();
+          else video.pause();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
     observer.observe(video);
-    this.cleanupFns.push(() => observer.disconnect());
+    this.cleanupFns.push(() => {
+      observer.disconnect();
+      video.removeEventListener('playing', markPlaying);
+    });
   }
 
   private hideLoader(gsap: any): void {
@@ -313,7 +423,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     const sub = document.querySelector('.hero-sub');
     const actions = document.querySelector('.hero-actions');
     const meta = document.querySelectorAll('.hero-meta li');
-    const visual = document.querySelector('.hero-visual');
 
     const tl = gsap.timeline({ delay: 0.5 });
 
@@ -345,19 +454,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
         meta,
         { y: 14, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power3.out' },
         0.95
-      );
-
-    if (visual)
-      tl.from(
-        visual,
-        {
-          clipPath: 'inset(100% 0 0 0)',
-          webkitClipPath: 'inset(100% 0 0 0)',
-          duration: 1.4,
-          ease: 'power4.out',
-          clearProps: 'clipPath,webkitClipPath'
-        },
-        0.2
       );
   }
 

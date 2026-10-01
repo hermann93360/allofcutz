@@ -1,7 +1,7 @@
 {
-  "name": "All of Cutz · Maison de coiffure",
+  "name": "All of Cutz · Hair Studio",
   "short_name": "All of Cutz",
-  "description": "Barbershop & maison de coiffure à Paris 12ᵉ. Réservation en ligne.",
+  "description": "Barbershop et salon de coiffure à Paris 12ᵉ. Réservation en ligne.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

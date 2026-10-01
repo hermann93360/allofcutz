@@ -33,10 +33,10 @@ export class BookingPageComponent implements OnInit, AfterViewInit {
     applySeo(this.metaService, this.doc, {
       title: 'Prendre rendez-vous · All of Cutz · Paris 12ᵉ',
       description:
-        'Réservez votre rendez-vous chez All of Cutz, barbershop & maison de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur. Confirmation immédiate par email.',
+        'Réservez votre rendez-vous chez All of Cutz, barbershop et salon de coiffure à Paris 12ᵉ. Coupe, barbe, soin, couleur. Confirmation immédiate par email.',
       path: '/reservation',
       imageUrl: 'https://allofcutz.paris/salon/salon-03-reception.jpg',
-      imageAlt: 'All of Cutz — Réservation en ligne'
+      imageAlt: 'All of Cutz · Réservation en ligne'
     });
   }
 

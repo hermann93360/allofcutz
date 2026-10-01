@@ -19,7 +19,7 @@
     <span class="nav-sep" aria-hidden="true"></span>
 
     <ul class="nav-menu">
-      <li><a href="#maison">Maison</a></li>
+      <li><a href="#savoir-faire">Savoir-faire</a></li>
       <li><a href="#prestations">Prestations</a></li>
       <li><a href="#equipe">Équipe</a></li>
       <li><a href="#visite">Visite</a></li>
@@ -43,13 +43,28 @@
   </nav>
 </header>
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO — vidéo plein écran ============ -->
 <section class="hero" id="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-media" aria-hidden="true">
+    <video
+      #heroVideo
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      disableremoteplayback>
+      <source src="videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 760px) and (orientation: portrait)" />
+      <source src="videos/hero-desktop.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-shade"></div>
+  </div>
 
-  <div class="hero-grid">
+  <div class="hero-inner">
     <div class="hero-content">
-      <span class="hero-eyebrow">Maison · Paris 12<sup>e</sup> · Ouvert en 2025</span>
+      <span class="hero-eyebrow">Hair Studio · Paris 12<sup>e</sup> · Ouvert en 2025</span>
 
       <h1 class="hero-title">
         <span class="title-line"><span class="title-inner">L&apos;art de la</span></span>
@@ -57,12 +72,12 @@
       </h1>
 
       <p class="hero-sub">
-        Cheveux, barbe, soin, couleur.<br/>
-        Trois barbiers à Paris 12<sup>e</sup>. Sur rendez-vous.
+        Cheveux, barbe, soin, couleur, tresses.<br/>
+        Quatre barbiers à Paris 12<sup>e</sup>. Sur rendez-vous.
       </p>
 
       <div class="hero-actions">
-        <a class="btn-primary" href="#book">
+        <a class="btn-primary btn-primary--light" href="#book">
           <span class="btn-label">Prendre rendez-vous</span>
           <span class="btn-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -70,81 +85,65 @@
             </svg>
           </span>
         </a>
-        <a class="btn-ghost" href="#prestations">
+        <a class="btn-ghost btn-ghost--light" href="#prestations">
           <span>Voir les prestations</span>
         </a>
       </div>
-
-      <ul class="hero-meta">
-        <li><span class="meta-key">Adresse</span><span class="meta-val">35 bd de Reuilly · 75012</span></li>
-        <li><span class="meta-key">Ouverture</span><span class="meta-val">6 jours / 7 · fermé le mardi</span></li>
-        <li><span class="meta-key">Avis</span><span class="meta-val">4.9 ★ · 1 000+ voix</span></li>
-      </ul>
     </div>
 
-    <figure class="hero-visual">
-      <img class="hero-image" src="salon/salon-03-reception.jpg" alt="All of Cutz — La Maison" />
-      <figcaption class="hero-caption">
-        <span class="caption-num">001</span>
-        <span class="caption-text">La Maison · Paris 12<sup>e</sup></span>
-      </figcaption>
-    </figure>
+    <ul class="hero-meta">
+      <li><span class="meta-key">Adresse</span><span class="meta-val">35 bd de Reuilly · 75012</span></li>
+      <li><span class="meta-key">Ouverture</span><span class="meta-val">6 jours / 7 · fermé le mardi</span></li>
+      <li><span class="meta-key">Avis</span><span class="meta-val">4.9 ★ · 1 000+ voix</span></li>
+    </ul>
   </div>
+
+  <a class="hero-scroll" href="#savoir-faire" aria-label="Découvrir le savoir-faire">
+    <span class="hero-scroll-line" aria-hidden="true"></span>
+    <span>Défiler</span>
+  </a>
 </section>
 
-<!-- ============ MAISON ============ -->
-<section class="section maison" id="maison" data-reveal data-reveal-children=".maison-text > *, .maison-image">
+<!-- ============ SAVOIR-FAIRE ============ -->
+<section class="section savoir-faire" id="savoir-faire" data-reveal data-reveal-children=".section-head, .display-h2, .savoir-intro, .skill-card">
   <div class="section-head">
-    <span class="section-num">002</span>
-    <span class="section-rule"></span>
-    <span class="section-title">Maison</span>
+    <span class="section-title">Savoir-faire</span>
   </div>
-  <div class="maison-grid">
-    <figure class="maison-image">
-      <img src="salon/salon-01-vitrine.jpg" alt="All of Cutz — Vitrine" />
-    </figure>
-    <div class="maison-text">
-      <h2 class="display-h2">
-        Trois barbiers, <em>toutes</em> les têtes.
-      </h2>
-      <p class="lede">
-        Un nouveau barbershop, ouvert en 2025 à Paris 12<sup>e</sup>.
-        Déjà mille voix nous l&apos;ont dit&nbsp;: <strong>4.9 sur cinq</strong>, sur Google et Planity.
-      </p>
-      <p class="body">
-        Cheveux et barbe, oui. Mais aussi soins du cuir chevelu, couleur, défrisage,
-        curly &amp; waves, coiffures protectrices. Une chaise pour chaque texture,
-        une oreille pour chaque demande.
-      </p>
-      <dl class="maison-signature">
-        <div><dt>Ouvert en</dt><dd>2025</dd></div>
-        <div><dt>Quartier</dt><dd>Reuilly · 12<sup>e</sup></dd></div>
-        <div><dt>Réservation</dt><dd>En ligne · 7j sauf mardi</dd></div>
-      </dl>
-    </div>
-  </div>
+  <h2 class="display-h2">Chaque texture a son <em>geste</em>.</h2>
+  <p class="savoir-intro">
+    Ouvert en 2025 boulevard de Reuilly, All of Cutz compte déjà plus de mille avis&nbsp;: <strong>4.9 sur cinq</strong> sur Google et Planity.
+    Cheveux lisses, bouclés, frisés ou crépus&nbsp;: chaque coupe commence par la texture.
+  </p>
+  <ul class="skill-grid">
+    @for (k of skills; track k.name) {
+      <li class="skill-card">
+        <figure class="skill-image">
+          <img [src]="k.src" [alt]="k.alt" loading="lazy" />
+        </figure>
+        <h3 class="skill-name">{{ k.name }}</h3>
+        <p class="skill-desc">{{ k.description }}</p>
+      </li>
+    }
+  </ul>
 </section>
 
 <!-- ============ PRESTATIONS ============ -->
 <section class="section prestations" id="prestations" data-reveal data-reveal-children=".section-head, .display-h2, .prestations-intro, .service-card, .section-foot">
   <div class="section-head">
-    <span class="section-num">003</span>
-    <span class="section-rule"></span>
     <span class="section-title">Prestations</span>
   </div>
   <h2 class="display-h2">
     Six rituels, <em>une</em> exigence.
   </h2>
   <p class="prestations-intro">
-    Une sélection de nos prestations principales. Le menu complet — couleur, défrisage,
-    coiffures protectrices — est disponible dans le module de réservation ci-dessous.
+    Une sélection de nos prestations principales. Le menu complet (couleur, défrisage,
+    coiffures protectrices) est disponible dans le module de réservation ci-dessous.
   </p>
 
   <ul class="services-grid">
     @for (s of services; track s.name) {
       <li class="service-card">
         <header class="service-head">
-          <span class="service-num">{{ s.index }}</span>
           <span class="service-price">{{ s.price }}</span>
         </header>
         <h3 class="service-name">{{ s.name }}</h3>
@@ -172,21 +171,20 @@
 <!-- ============ ÉQUIPE ============ -->
 <section class="section equipe" id="equipe" data-reveal data-reveal-children=".section-head, .display-h2, .team-card">
   <div class="section-head">
-    <span class="section-num">004</span>
-    <span class="section-rule"></span>
     <span class="section-title">L&apos;Équipe</span>
   </div>
   <h2 class="display-h2">
-    Trois barbiers, <em>trois</em> mains.
+    Quatre barbiers, <em>une</em> équipe.
   </h2>
   <ul class="team-grid">
     @for (m of team; track m.name) {
       <li class="team-card">
-        <div class="team-portrait">
-          <span class="team-display">{{ m.name }}</span>
-          <span class="team-num">{{ m.index }}</span>
-        </div>
+        <figure class="team-portrait">
+          <img class="team-photo" [src]="m.photo" [alt]="m.name + ', ' + m.role" loading="lazy" />
+          <img class="team-photo team-photo--alt" [src]="m.photoAlt" alt="" aria-hidden="true" loading="lazy" />
+        </figure>
         <div class="team-meta">
+          <span class="team-name">{{ m.name }}</span>
           <span class="team-role">{{ m.role }}</span>
         </div>
       </li>
@@ -197,8 +195,6 @@
 <!-- ============ CHIFFRES ============ -->
 <section class="section chiffres" id="chiffres" data-reveal data-reveal-children=".section-head, .stat">
   <div class="section-head light">
-    <span class="section-num">005</span>
-    <span class="section-rule"></span>
     <span class="section-title">En Chiffres</span>
   </div>
   <div class="stats-grid">
@@ -215,8 +211,6 @@
 <!-- ============ GALERIE ============ -->
 <section class="section galerie" id="galerie" data-reveal data-reveal-children=".section-head, .display-h2, .g-img">
   <div class="section-head">
-    <span class="section-num">006</span>
-    <span class="section-rule"></span>
     <span class="section-title">L&apos;Atelier en images</span>
   </div>
   <h2 class="display-h2">
@@ -224,25 +218,9 @@
   </h2>
   <div class="gallery-mosaic">
     @for (g of gallery; track g.src) {
-      <figure class="g-img" [class]="'g-img ' + g.span">
-        @if (g.video) {
-          <video
-            [src]="g.video"
-            [poster]="g.src"
-            [attr.aria-label]="g.alt"
-            muted
-            loop
-            playsinline
-            preload="metadata"></video>
-          <span class="g-live" aria-hidden="true">
-            <span class="g-live-dot"></span>
-            <span>Live</span>
-          </span>
-        } @else {
-          <img [src]="g.src" [alt]="g.alt" loading="lazy" />
-        }
+      <figure [class]="'g-img ' + g.span">
+        <img [src]="g.src" [alt]="g.alt" loading="lazy" />
         <figcaption>
-          <span class="g-num">{{ g.index }}</span>
           <span class="g-cap">{{ g.caption }}</span>
         </figcaption>
       </figure>
@@ -250,11 +228,33 @@
   </div>
 </section>
 
+<!-- ============ GAMME ============ -->
+<section class="section gamme" id="gamme" data-reveal data-reveal-children=".section-head, .display-h2, .gamme-intro, .product-card">
+  <div class="section-head">
+    <span class="section-title">La Gamme</span>
+  </div>
+  <h2 class="display-h2">
+    Nos soins, <em>signés</em> All of Cutz.
+  </h2>
+  <p class="gamme-intro">
+    Cheveux, barbe, coiffage&nbsp;: une gamme signée All of Cutz, pensée pour toutes les textures.
+  </p>
+  <ul class="product-grid">
+    @for (p of products; track p.name) {
+      <li class="product-card">
+        <figure class="product-image">
+          <img [src]="p.src" [alt]="'All of Cutz, ' + p.name" loading="lazy" />
+        </figure>
+        <span class="product-category">{{ p.category }}</span>
+        <span class="product-name">{{ p.name }}</span>
+      </li>
+    }
+  </ul>
+</section>
+
 <!-- ============ RÉSERVATION (Planity inline) ============ -->
 <section class="section booking" id="book" #bookingSection data-reveal data-reveal-children=".section-head, .display-h2, .booking-intro, .booking-frame">
   <div class="section-head">
-    <span class="section-num">007</span>
-    <span class="section-rule"></span>
     <span class="section-title">Réservation</span>
   </div>
   <h2 class="display-h2">
@@ -272,8 +272,6 @@
 <!-- ============ VISITE ============ -->
 <section class="section visite" id="visite" data-reveal data-reveal-children=".section-head, .visite-image, .visite-text > *">
   <div class="section-head">
-    <span class="section-num">008</span>
-    <span class="section-rule"></span>
     <span class="section-title">Visite</span>
   </div>
   <div class="visite-grid">
@@ -327,9 +325,8 @@
       </div>
     </div>
     <figure class="visite-image">
-      <img src="devanture.png" alt="All of Cutz — Devanture" />
+      <img src="shooting/facade-rue-03.jpg" alt="All of Cutz, devanture au 35 boulevard de Reuilly" loading="lazy" />
       <figcaption>
-        <span class="g-num">008</span>
         <span class="g-cap">35 bd de Reuilly</span>
       </figcaption>
     </figure>
@@ -340,27 +337,29 @@
 <footer class="site-footer">
   <div class="footer-top">
     <div class="footer-brand">
-      <img class="footer-logo" src="logo-full.png" alt="All of Cutz — Hair Studio" />
-      <p class="footer-tagline">Maison de coiffure · Paris 12<sup>e</sup></p>
+      <img class="footer-logo" src="logo-full.png" alt="All of Cutz Hair Studio" />
+      <p class="footer-tagline">Hair Studio · Paris 12<sup>e</sup></p>
     </div>
 
     <nav class="footer-nav" aria-label="Navigation pied de page">
       <span class="footer-nav-title">Navigation</span>
       <ul>
-        <li><a href="#maison">Maison</a></li>
+        <li><a href="#savoir-faire">Savoir-faire</a></li>
         <li><a href="#prestations">Prestations</a></li>
         <li><a href="#equipe">L&apos;Équipe</a></li>
         <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#gamme">La Gamme</a></li>
         <li><a href="#visite">Visite</a></li>
       </ul>
     </nav>
 
     <div class="footer-info">
-      <span class="footer-nav-title">Maison</span>
+      <span class="footer-nav-title">Adresse</span>
       <ul>
         <li>35 boulevard de Reuilly · 75012 Paris</li>
-        <li>Lun · Mer — Jeu · 11h — 20h</li>
-        <li>Ven — Sam · 10h — 21h · Dim · 11h — 18h</li>
+        <li>Lun, mer, jeu · 11h à 20h</li>
+        <li>Ven, sam · 10h à 21h</li>
+        <li>Dim · 11h à 18h</li>
         <li>Fermé le mardi</li>
         <li><a [href]="phoneTel">{{ phone }}</a></li>
         <li><a href="mailto:contact&#64;allofcutz.paris">contact&#64;allofcutz.paris</a></li>
@@ -381,7 +380,7 @@
   </div>
 
   <div class="footer-bottom">
-    <span>&copy; MMXXVI · Maison All of Cutz</span>
+    <span>&copy; MMXXVI · All of Cutz Hair Studio</span>
     <span>Site sur rendez-vous uniquement</span>
   </div>
 </footer>
