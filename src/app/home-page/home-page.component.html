@@ -32,7 +32,7 @@
       <span class="status-label">Ouvert</span>
     </div>
 
-    <a class="nav-cta" href="#book">
+    <a class="nav-cta" href="/reservation" (click)="openBooking($event)">
       <span class="nav-cta-label">Réserver</span>
       <span class="nav-cta-arrow">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -77,7 +77,7 @@
       </p>
 
       <div class="hero-actions">
-        <a class="btn-primary btn-primary--light" href="#book">
+        <a class="btn-primary btn-primary--light" href="/reservation" (click)="openBooking($event)">
           <span class="btn-label">Prendre rendez-vous</span>
           <span class="btn-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -150,7 +150,7 @@
         <p class="service-desc">{{ s.description }}</p>
         <footer class="service-foot-card">
           <span class="service-duration">{{ s.duration }}</span>
-          <a class="service-cta" href="#book" [attr.aria-label]="'Réserver ' + s.name">
+          <a class="service-cta" href="/reservation" (click)="openBooking($event)" [attr.aria-label]="'Réserver ' + s.name">
             <span>Réserver</span>
             <span class="cta-arrow" aria-hidden="true">→</span>
           </a>
@@ -252,8 +252,8 @@
   </ul>
 </section>
 
-<!-- ============ RÉSERVATION (Planity inline) ============ -->
-<section class="section booking" id="book" #bookingSection data-reveal data-reveal-children=".section-head, .display-h2, .booking-intro, .booking-frame">
+<!-- ============ RÉSERVATION ============ -->
+<section class="section booking" id="book" data-reveal data-reveal-children=".section-head, .display-h2, .booking-intro, .booking-cta">
   <div class="section-head">
     <span class="section-title">Réservation</span>
   </div>
@@ -261,11 +261,21 @@
     Choisissez votre <em>rituel</em>.
   </h2>
   <p class="booking-intro">
-    Sélectionnez la prestation, le coiffeur, votre créneau.<br/>
+    Sélectionnez la prestation, le barbier, votre créneau.<br/>
     Confirmation immédiate par email. Annulation possible jusqu&apos;à 24h avant.
   </p>
-  <div class="booking-frame">
-    <div class="booking-widget" #planityContainer></div>
+  <div class="booking-cta">
+    <a class="btn-primary" href="/reservation" (click)="openBooking($event)">
+      <span class="btn-label">Réserver en ligne</span>
+      <span class="btn-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </a>
+    <a class="btn-ghost" [href]="phoneTel">
+      <span>Ou appelez le {{ phone }}</span>
+    </a>
   </div>
 </section>
 
@@ -310,7 +320,7 @@
         </div>
       </dl>
       <div class="visite-actions">
-        <a class="btn-primary" href="#book">
+        <a class="btn-primary" href="/reservation" (click)="openBooking($event)">
           <span class="btn-label">Prendre rendez-vous</span>
           <span class="btn-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -368,7 +378,7 @@
 
     <div class="footer-cta">
       <span class="footer-nav-title">Rendez-vous</span>
-      <a class="btn-primary" href="#book">
+      <a class="btn-primary" href="/reservation" (click)="openBooking($event)">
         <span class="btn-label">Réserver</span>
         <span class="btn-arrow" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -384,3 +394,30 @@
     <span>Site sur rendez-vous uniquement</span>
   </div>
 </footer>
+
+<!-- ============ RÉSERVATION PLEIN ÉCRAN (Planity) ============ -->
+<div
+  class="booking-overlay"
+  [class.is-open]="bookingOpen"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="booking-overlay-title"
+  [attr.aria-hidden]="bookingOpen ? null : 'true'"
+  [attr.inert]="bookingOpen ? null : ''">
+  <header class="booking-overlay-bar">
+    <img class="booking-overlay-logo" src="logo-def.png" alt="" aria-hidden="true" />
+    <span class="booking-overlay-title" id="booking-overlay-title">Prendre rendez-vous</span>
+    <button type="button" class="booking-overlay-close" #bookingClose (click)="closeBooking()" aria-label="Fermer la réservation">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+  </header>
+  <div class="booking-overlay-body" #bookingBody data-lenis-prevent>
+    <div class="booking-overlay-inner">
+      <div class="booking-frame booking-frame--panel">
+        <div class="booking-widget" #planityContainer></div>
+      </div>
+    </div>
+  </div>
+</div>

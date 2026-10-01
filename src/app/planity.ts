@@ -25,11 +25,18 @@ export interface PlanityOptions {
 const CLICK_WINDOW_MS = 800;
 
 /**
- * Planity calls `window.scroll(0, 0)` on every button click, which throws the
- * visitor to the top of the page. Calls made right after a click inside the
- * widget are replaced by `onScrollReset` (by default, the top of the widget).
+ * Planity moves the window after each click in the widget: `scroll(0, 0)`,
+ * then `scroll(0, y)` to bring the next step into view.
+ *
+ * - With `onWindowScroll`, every window scroll requested right after a click
+ *   in the widget goes to that handler instead (e.g. to scroll a panel).
+ * - Without it, only the reset to the top is caught, and the page goes to the
+ *   top of the widget instead of the top of the page.
  */
-function guardScrollReset(container: HTMLElement, onScrollReset?: () => void): void {
+function guardWindowScroll(
+  container: HTMLElement,
+  onWindowScroll?: (top: number) => void
+): void {
   const w = window as any;
   w.__planityScrollGuard?.();
 
@@ -37,19 +44,19 @@ function guardScrollReset(container: HTMLElement, onScrollReset?: () => void): v
   const onClick = () => (lastClick = performance.now());
   container.addEventListener('click', onClick, true);
 
-  const fallback = () => {
+  const toWidgetTop = () => {
     const y = container.getBoundingClientRect().top + window.scrollY - 100;
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   };
-  const isReset = (args: any[]) => {
-    const top = typeof args[0] === 'object' && args[0] !== null ? args[0].top : args[1];
-    return top === 0 || top === undefined;
-  };
+  const requestedTop = (args: any[]): number | undefined =>
+    typeof args[0] === 'object' && args[0] !== null ? args[0].top : args[1];
+
   const wrap = (orig: (...a: any[]) => void) =>
     function (this: Window, ...args: any[]) {
-      if (performance.now() - lastClick < CLICK_WINDOW_MS && isReset(args)) {
-        (onScrollReset ?? fallback)();
-        return;
+      if (performance.now() - lastClick < CLICK_WINDOW_MS) {
+        const top = requestedTop(args) ?? 0;
+        if (onWindowScroll) return onWindowScroll(top);
+        if (top === 0) return toWidgetTop();
       }
       return orig.apply(this, args);
     };
@@ -69,10 +76,10 @@ function guardScrollReset(container: HTMLElement, onScrollReset?: () => void): v
 export function mountPlanity(
   container: HTMLElement,
   options: PlanityOptions = {},
-  onScrollReset?: () => void
+  onWindowScroll?: (top: number) => void
 ): void {
   const w = window as any;
-  guardScrollReset(container, onScrollReset);
+  guardWindowScroll(container, onWindowScroll);
 
   w.planity = {
     key: PLANITY_KEY,

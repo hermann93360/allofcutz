@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  HostListener,
   Inject,
   OnDestroy,
   OnInit,
@@ -261,7 +262,13 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('loader') loader!: ElementRef<HTMLDivElement>;
   @ViewChild('loaderBar') loaderBar!: ElementRef<HTMLDivElement>;
   @ViewChild('planityContainer') planityContainer!: ElementRef<HTMLDivElement>;
-  @ViewChild('bookingSection') bookingSection!: ElementRef<HTMLElement>;
+  @ViewChild('bookingBody') bookingBody!: ElementRef<HTMLDivElement>;
+  @ViewChild('bookingClose') bookingClose!: ElementRef<HTMLButtonElement>;
+
+  /** Full-screen booking panel (Planity). */
+  bookingOpen = false;
+  private widgetMounted = false;
+  private focusBeforeBooking: HTMLElement | null = null;
   @ViewChild('heroVideo') heroVideo!: ElementRef<HTMLVideoElement>;
 
   private cleanupFns: Array<() => void> = [];
@@ -304,6 +311,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.doc.documentElement.classList.remove('booking-open');
     this.cleanupFns.forEach((fn) => {
       try {
         fn();
@@ -329,7 +337,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initSectionReveals(gsap, ScrollTrigger);
     this.initCounters(gsap, ScrollTrigger);
     this.initAnchorScroll(lenis);
-    this.initPlanityLazyMount();
+    this.initPlanityPrefetch();
     ScrollTrigger.refresh();
   }
 
@@ -557,21 +565,15 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private initPlanityLazyMount(): void {
-    const section = this.bookingSection?.nativeElement;
-    if (!section) return;
-    if (typeof IntersectionObserver === 'undefined') {
-      this.mountWidget();
-      return;
-    }
+  /** Loads Planity ahead of time when the booking section gets close. */
+  private initPlanityPrefetch(): void {
+    const section = this.doc.getElementById('book');
+    if (!section || typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            this.mountWidget();
-            observer.disconnect();
-            break;
-          }
+        if (entries.some((e) => e.isIntersecting)) {
+          this.mountWidget();
+          observer.disconnect();
         }
       },
       { rootMargin: '600px 0px 600px 0px' }
@@ -580,30 +582,57 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cleanupFns.push(() => observer.disconnect());
   }
 
+  openBooking(event?: Event): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    event?.preventDefault();
+    if (this.bookingOpen) return;
+    this.focusBeforeBooking = this.doc.activeElement as HTMLElement | null;
+    this.bookingOpen = true;
+    this.lenis?.stop();
+    this.doc.documentElement.classList.add('booking-open');
+    this.mountWidget();
+    setTimeout(() => this.bookingClose?.nativeElement.focus({ preventScroll: true }), 50);
+  }
+
+  closeBooking(): void {
+    if (!this.bookingOpen) return;
+    this.bookingOpen = false;
+    this.doc.documentElement.classList.remove('booking-open');
+    this.lenis?.start();
+    this.focusBeforeBooking?.focus({ preventScroll: true });
+    this.focusBeforeBooking = null;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closeBooking();
+  }
+
   private mountWidget(): void {
+    if (this.widgetMounted) return;
     const container = this.planityContainer?.nativeElement;
     if (!container) return;
+    this.widgetMounted = true;
     mountPlanity(
       container,
-      {
-        servicesNotCollapsed: true,
-        headerWidth: '88px',
-        onServiceAdd: () => this.scrollToBooking()
-      },
-      () => this.scrollToBooking()
+      { servicesNotCollapsed: true, headerWidth: '88px' },
+      (top) => this.scrollPanelLikeWindow(top)
     );
   }
 
   /**
-   * Scrolls to the top of the booking section. The target is an absolute
-   * document position: passing the element to Lenis would add its cached
-   * scroll offset, which is stale right after Planity moves the window.
+   * Planity asks the window to scroll to `top` (a document position) to show
+   * part of the widget. The widget lives in the fixed panel, so the same
+   * element is brought under the panel bar by scrolling the panel instead.
    */
-  private scrollToBooking(): void {
-    const section = this.bookingSection?.nativeElement;
-    if (!section) return;
-    const y = section.getBoundingClientRect().top + window.scrollY - 40;
-    if (this.lenis) this.lenis.scrollTo(y, { duration: 1.0 });
-    else window.scrollTo({ top: y, behavior: 'smooth' });
+  private scrollPanelLikeWindow(top: number): void {
+    const panel = this.bookingBody?.nativeElement;
+    if (!panel) return;
+    const elementTopInViewport = top - window.scrollY;
+    const panelTop = panel.getBoundingClientRect().top;
+    panel.scrollTo({
+      top: Math.max(0, panel.scrollTop + elementTopInViewport - panelTop),
+      behavior: 'smooth'
+    });
   }
 }
