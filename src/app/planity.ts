@@ -21,11 +21,58 @@ export interface PlanityOptions {
   onServiceAdd?: () => void;
 }
 
+/** Window scroll calls closer than this to a click in the widget count as Planity's. */
+const CLICK_WINDOW_MS = 800;
+
+/**
+ * Planity calls `window.scroll(0, 0)` on every button click, which throws the
+ * visitor to the top of the page. Calls made right after a click inside the
+ * widget are replaced by `onScrollReset` (by default, the top of the widget).
+ */
+function guardScrollReset(container: HTMLElement, onScrollReset?: () => void): void {
+  const w = window as any;
+  w.__planityScrollGuard?.();
+
+  let lastClick = -Infinity;
+  const onClick = () => (lastClick = performance.now());
+  container.addEventListener('click', onClick, true);
+
+  const fallback = () => {
+    const y = container.getBoundingClientRect().top + window.scrollY - 100;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  };
+  const isReset = (args: any[]) => {
+    const top = typeof args[0] === 'object' && args[0] !== null ? args[0].top : args[1];
+    return top === 0 || top === undefined;
+  };
+  const wrap = (orig: (...a: any[]) => void) =>
+    function (this: Window, ...args: any[]) {
+      if (performance.now() - lastClick < CLICK_WINDOW_MS && isReset(args)) {
+        (onScrollReset ?? fallback)();
+        return;
+      }
+      return orig.apply(this, args);
+    };
+
+  const origScroll = window.scroll;
+  const origScrollTo = window.scrollTo;
+  window.scroll = wrap(origScroll) as typeof window.scroll;
+  window.scrollTo = wrap(origScrollTo) as typeof window.scrollTo;
+
+  w.__planityScrollGuard = () => {
+    container.removeEventListener('click', onClick, true);
+    window.scroll = origScroll;
+    window.scrollTo = origScrollTo;
+  };
+}
+
 export function mountPlanity(
   container: HTMLElement,
-  options: PlanityOptions = {}
+  options: PlanityOptions = {},
+  onScrollReset?: () => void
 ): void {
   const w = window as any;
+  guardScrollReset(container, onScrollReset);
 
   w.planity = {
     key: PLANITY_KEY,

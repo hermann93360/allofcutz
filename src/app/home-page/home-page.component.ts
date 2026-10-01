@@ -583,17 +583,27 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   private mountWidget(): void {
     const container = this.planityContainer?.nativeElement;
     if (!container) return;
-    mountPlanity(container, {
-      servicesNotCollapsed: true,
-      headerWidth: '88px',
-      onServiceAdd: () => {
-        if (this.lenis && this.bookingSection) {
-          this.lenis.scrollTo(this.bookingSection.nativeElement, {
-            offset: -40,
-            duration: 1.0
-          });
-        }
-      }
-    });
+    mountPlanity(
+      container,
+      {
+        servicesNotCollapsed: true,
+        headerWidth: '88px',
+        onServiceAdd: () => this.scrollToBooking()
+      },
+      () => this.scrollToBooking()
+    );
+  }
+
+  /**
+   * Scrolls to the top of the booking section. The target is an absolute
+   * document position: passing the element to Lenis would add its cached
+   * scroll offset, which is stale right after Planity moves the window.
+   */
+  private scrollToBooking(): void {
+    const section = this.bookingSection?.nativeElement;
+    if (!section) return;
+    const y = section.getBoundingClientRect().top + window.scrollY - 40;
+    if (this.lenis) this.lenis.scrollTo(y, { duration: 1.0 });
+    else window.scrollTo({ top: y, behavior: 'smooth' });
   }
 }
